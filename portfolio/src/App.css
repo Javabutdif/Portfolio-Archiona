@@ -1,0 +1,167 @@
+.page-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 3rem 0 2.5rem;
+}
+
+.hero-copy,
+.hero-card,
+.section {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(14px);
+}
+
+.hero-copy {
+  border-radius: 1.75rem;
+  padding: 2rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.74rem;
+  opacity: 0.72;
+  margin-bottom: 0.85rem;
+}
+
+.lead {
+  margin-top: 1rem;
+  max-width: 60ch;
+  font-size: 1.05rem;
+  color: rgba(245, 239, 232, 0.8);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.82rem 1.1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button.primary {
+  background: #f5efe8;
+  color: #11151d;
+}
+
+.button.secondary {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f5efe8;
+}
+
+.hero-card {
+  border-radius: 1.5rem;
+  padding: 1.35rem 1.4rem;
+}
+
+.card-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  opacity: 0.72;
+  margin-bottom: 0.8rem;
+}
+
+.hero-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.7rem;
+  color: rgba(245, 239, 232, 0.85);
+}
+
+.section {
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+.about {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.section-heading {
+  margin-bottom: 1rem;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.project-card {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.15rem;
+  padding: 1.1rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.project-card p {
+  margin: 0.6rem 0 0.9rem;
+  color: rgba(245, 239, 232, 0.8);
+}
+
+.stack-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.8rem;
+}
+
+.stack-row span {
+  border-radius: 999px;
+  padding: 0.3rem 0.6rem;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.8rem;
+}
+
+.project-card a,
+.contact a {
+  color: #f7d7b3;
+  text-decoration: none;
+}
+
+.project-card a:hover,
+.contact a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .about,
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding-top: 1rem;
+  }
+}
