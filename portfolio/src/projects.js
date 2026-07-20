@@ -4,7 +4,7 @@ export const projects = [
     title: "Lessora AI",
     subtitle: "AI-Powered Lesson Planning Platform",
     description:
-      "Developing an AI-powered lesson planning platform that helps educators transform topics, grade levels, class durations, and learning objectives into structured lesson plans. Built with Expo React Native and supported by a Node.js and Express backend, the platform features onboarding, authentication, personalized dashboards, AI-generated lesson recommendations, analytics, and secure data management.",
+      "Designed and developed a cross-platform AI lesson planning platform that helps educators generate structured, classroom-ready lesson plans from topics, grade levels, learning objectives, and class duration. Built with Expo React Native, Node.js, Express, and MongoDB, the platform integrates the OpenAI API, secure authentication, personalized dashboards, usage analytics, and backend automation to deliver an end-to-end experience across web and mobile.",
     tech: [
       "TypeScript",
       "Expo",
@@ -12,23 +12,27 @@ export const projects = [
       "Node.js",
       "Express",
       "MongoDB",
+      "OpenAI API",
     ],
     demoLink: "https://lessora-ai.ajgenabio.me/",
     linkLabel: "View Live Site",
     year: "2026",
-    role: "Fullstack developer",
+    role: "Fullstack Developer",
+    category: "featured",
   },
   {
     id: 1,
     title: "PSITS Website",
-    subtitle: "Student org e-commerce",
+    subtitle: "Student Organization Management & E-Commerce Platform",
     description:
-      "Developed a web platform for the College of Computer Studies and the Philippine Society of Information Technology Students (PSITS) to streamline merchandise sales, uniform distribution, and event management. The system features integrated ordering, attendance tracking, inventory management, and a Point of Sale (POS) module with automated receipt generation to improve operational efficiency for organization officers.",
-    tech: ["React", "Express", "Node.js", "AWS S3", "Tailwind CSS"],
-    demoLink: "https://psits-web.vercel.app/",
+      "Led the development of a centralized web platform for the Philippine Society of Information Technology Students (PSITS), serving over 3,000 users within the College of Computer Studies. The system streamlined merchandise sales, uniform distribution, event registration, attendance tracking, inventory management, and Point of Sale (POS) operations, replacing manual workflows with an integrated digital solution.",
+    tech: ["React", "Node.js", "Express", "AWS S3", "Tailwind CSS"],
+    demoLink: "https://psits.org/",
     year: "2024",
-    role: "Lead developer",
+    role: "Lead Developer",
+    category: "featured",
   },
+
   {
     id: 2,
     title: "MentalHelp PH",
@@ -39,6 +43,7 @@ export const projects = [
     demoLink: "#",
     year: "2024",
     role: "Fullstack developer",
+    category: "school",
   },
   {
     id: 3,
@@ -50,6 +55,7 @@ export const projects = [
     demoLink: "#",
     year: "2023",
     role: "Fullstack developer",
+    category: "school",
   },
   {
     id: 4,
@@ -61,5 +67,6 @@ export const projects = [
     demoLink: "#",
     year: "2023",
     role: "Developer",
+    category: "school",
   },
 ];

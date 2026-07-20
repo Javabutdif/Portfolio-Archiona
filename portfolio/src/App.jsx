@@ -199,19 +199,49 @@ export default function App() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {projects.map((project, i) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-              >
-                <ProjectCard project={project} onSelect={setActiveProject} />
-              </motion.div>
-            ))}
-          </div>
+          {/* Featured Projects */}
+          {projects.filter((p) => p.category === "featured").length > 0 && (
+            <div className="mb-20">
+              <span className="text-eyebrow block mb-6">Featured</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {projects
+                  .filter((p) => p.category === "featured")
+                  .map((project, i) => (
+                    <motion.div
+                      key={project.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.5, delay: i * 0.1 }}
+                    >
+                      <ProjectCard project={project} onSelect={setActiveProject} />
+                    </motion.div>
+                  ))}
+              </div>
+            </div>
+          )}
+
+          {/* School Projects */}
+          {projects.filter((p) => p.category === "school").length > 0 && (
+            <div>
+              <span className="text-eyebrow block mb-6">School Projects</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {projects
+                  .filter((p) => p.category === "school")
+                  .map((project, i) => (
+                    <motion.div
+                      key={project.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.5, delay: i * 0.1 }}
+                    >
+                      <ProjectCard project={project} onSelect={setActiveProject} />
+                    </motion.div>
+                  ))}
+              </div>
+            </div>
+          )}
         </section>
 
         {/* ═══════════ ABOUT ═══════════ */}

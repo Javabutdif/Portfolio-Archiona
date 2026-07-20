@@ -9,7 +9,7 @@ export default function ProjectCard({ project, onSelect }) {
   return (
     <motion.article 
       layoutId={`project-container-${project.id}`}
-      className="group structured-container p-6 md:p-8 cursor-pointer flex flex-col focus-visible:ring-2 focus-visible:ring-sky-400 outline-none"
+      className="group structured-container p-6 md:p-8 cursor-pointer flex flex-col focus-visible:ring-2 focus-visible:ring-sky-400 outline-none min-h-[320px]"
       onClick={() => onSelect(project)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -28,7 +28,7 @@ export default function ProjectCard({ project, onSelect }) {
       </div>
 
       {/* Body */}
-      <div className="flex-grow mb-8">
+      <div className="flex-grow mb-8 min-h-0">
         <motion.h3 
           layoutId={`project-title-${project.id}`}
           className="heading-card mb-2 group-hover:text-white transition-colors"
@@ -39,7 +39,7 @@ export default function ProjectCard({ project, onSelect }) {
         {project.subtitle && (
           <motion.p 
             layoutId={`project-subtitle-${project.id}`}
-            className="text-body-sm mb-4"
+            className="text-body-sm mb-4 line-clamp-1"
           >
             {project.subtitle}
           </motion.p>
