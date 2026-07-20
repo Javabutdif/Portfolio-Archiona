@@ -21,6 +21,7 @@ import { projects } from "./projects.js";
 const navLinks = [
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "Roles", href: "#roles" },
   { label: "About", href: "#about" },
 ];
 
@@ -161,9 +162,7 @@ export default function App() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-body text-lg md:text-xl mb-10"
             >
-              I build custom web applications and internal tools that combine
-              reliable software, practical AI features, and automation to help
-              teams move faster.
+              I build web apps and internal tools, mostly for organizations and small teams. I like adding AI where it actually helps, not just because it's trendy.
             </motion.p>
 
             <motion.div
@@ -194,8 +193,7 @@ export default function App() {
             <span className="text-eyebrow">Selected Work</span>
             <h2 className="heading-section">Projects</h2>
             <p className="text-body">
-              Recent work includes web platforms, automation-heavy tools, and
-              AI-assisted experiences built to simplify everyday work.
+              Web platforms, internal tools, and AI experiments. Most of this work is for student orgs or personal projects.
             </p>
           </div>
 
@@ -214,7 +212,11 @@ export default function App() {
                       viewport={{ once: true, margin: "-50px" }}
                       transition={{ duration: 0.5, delay: i * 0.1 }}
                     >
-                      <ProjectCard project={project} onSelect={setActiveProject} />
+                      <ProjectCard
+                        project={project}
+                        onSelect={setActiveProject}
+                        isFeatured={true}
+                      />
                     </motion.div>
                   ))}
               </div>
@@ -236,12 +238,80 @@ export default function App() {
                       viewport={{ once: true, margin: "-50px" }}
                       transition={{ duration: 0.5, delay: i * 0.1 }}
                     >
-                      <ProjectCard project={project} onSelect={setActiveProject} />
+                      <ProjectCard
+                        project={project}
+                        onSelect={setActiveProject}
+                      />
                     </motion.div>
                   ))}
               </div>
             </div>
           )}
+        </section>
+
+        {/* ═══════════ ROLES & COMMITMENT ═══════════ */}
+        <section className="py-24 border-b border-border-subtle" id="roles">
+          <div className="mb-16 max-w-2xl">
+            <span className="text-eyebrow">Roles & Commitment</span>
+            <h2 className="heading-section">Where I invest my time</h2>
+            <p className="text-body">
+               Beyond the project cards above, with some context on how I engage with each.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5 }}
+              className="structured-container p-6 md:p-8"
+            >
+              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+                <div>
+                  <h3 className="heading-card text-lg">Lead Developer</h3>
+                  <p className="text-body-sm mt-1">
+                    PSITS (Philippine Society of Information Technology Students)
+                  </p>
+                </div>
+                <span className="text-meta whitespace-nowrap">
+                  2024 – Present
+                </span>
+              </div>
+              <p className="text-body-sm">
+                Built the PSITS website from scratch and served as Lead
+                Developer for over a year. Stepped back in August last year due
+                to work commitments, and a new team of developers took over
+                 maintenance. This marks the site's third generation. The
+                platform continues to serve 3,000+ members for merchandise,
+                events, and operations.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="structured-container p-6 md:p-8"
+            >
+              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+                <div>
+                  <h3 className="heading-card text-lg">
+                    Solo Founder / Developer
+                  </h3>
+                  <p className="text-body-sm mt-1">Lessora AI</p>
+                </div>
+                <span className="text-meta whitespace-nowrap">2026</span>
+              </div>
+              <p className="text-body-sm">
+                An AI-powered lesson planning platform I built on my own.
+                Currently in use by 10+ users and deployed. Paused new development
+                this year due to work commitments, but the platform remains live
+                and functional. Built end-to-end: design, frontend, backend, and deployment.
+              </p>
+            </motion.div>
+          </div>
         </section>
 
         {/* ═══════════ ABOUT ═══════════ */}
@@ -250,10 +320,7 @@ export default function App() {
             <span className="text-eyebrow">Background</span>
             <h2 className="heading-section">About</h2>
             <p className="text-body">
-              I care about the difference between software that merely ships and
-              software that actually helps people get work done. That means
-              thoughtful architecture, clear interactions, and a calm experience
-              from first click to final task.
+              I care about software that actually helps people, not just software that ships. That means clean code, straightforward UIs, and not overcomplicating things.
             </p>
           </div>
 
@@ -293,6 +360,27 @@ export default function App() {
             <span className="text-sm font-medium text-slate-300">
               Anton James Genabio
             </span>
+          </div>
+          <div className="flex items-center gap-6 text-meta">
+            <a
+              href="https://github.com/Javabutdif"
+              target="_blank"
+              rel="noreferrer"
+              className="text-slate-500 hover:text-white transition-colors"
+              aria-label="GitHub"
+            >
+              <GithubLogo size={18} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/jgenabs/"
+              target="_blank"
+              rel="noreferrer"
+              className="text-slate-500 hover:text-white transition-colors"
+              aria-label="LinkedIn"
+            >
+              <LinkedinLogo size={18} />
+            </a>
+            <span>© {new Date().getFullYear()}</span>
           </div>
         </div>
       </footer>

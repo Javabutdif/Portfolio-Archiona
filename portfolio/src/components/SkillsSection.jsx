@@ -16,7 +16,10 @@ import {
   Circuitry,
   Sparkle,
   Lightning,
-  GearSix,
+  Code,
+  Monitor,
+  Globe,
+  Wrench,
 } from "@phosphor-icons/react";
 
 const skills = [
@@ -36,15 +39,15 @@ const skills = [
     items: [
       { name: "React & TypeScript", icon: <Atom /> },
       { name: "Responsive UI Systems", icon: <Browser /> },
-      { name: "Tailwind & Design Systems", icon: <DeviceMobile /> },
-      { name: "UI Implementation", icon: <DeviceMobile /> },
+      { name: "Tailwind & Design Systems", icon: <Monitor /> },
+      { name: "UI Implementation", icon: <Code /> },
     ],
   },
   {
     category: "Backend",
     items: [
       { name: "Node.js & Express", icon: <HardDrives /> },
-      { name: "Java & C# / .NET", icon: <TerminalWindow /> },
+      { name: "Java & C# / .NET", icon: <Code /> },
       { name: "RESTful APIs", icon: <Stack /> },
       { name: "MongoDB & MySQL", icon: <Database /> },
     ],
@@ -52,10 +55,10 @@ const skills = [
   {
     category: "Delivery & Ops",
     items: [
-      { name: "Full-Stack Delivery", icon: <GearSix /> },
+      { name: "Full-Stack Delivery", icon: <Wrench /> },
       { name: "Deployment & Hosting", icon: <Cloud /> },
-      { name: "Git & Version Control", icon: <TerminalWindow /> },
-      { name: "System Integration", icon: <GearSix /> },
+      { name: "Git & Version Control", icon: <GitBranch /> },
+      { name: "System Integration", icon: <Globe /> },
     ],
   },
 ];
@@ -65,10 +68,9 @@ export default function SkillsSection() {
     <section className="py-24 border-b border-border-subtle" id="skills">
       <div className="mb-16 max-w-2xl">
         <span className="text-eyebrow">Capabilities</span>
-        <h2 className="heading-section">What I build</h2>
+        <h2 className="heading-section">Skills</h2>
         <p className="text-body">
-          I work across the full product lifecycle — from shaping the solution to
-          shipping software that is practical, maintainable, and useful.
+          I work across the full product lifecycle, from idea to shipping. Software that works and stays maintainable.
         </p>
       </div>
 

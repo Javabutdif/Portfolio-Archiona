@@ -1,9 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight } from '@phosphor-icons/react';
+import { ArrowRight, ArrowUpRight } from '@phosphor-icons/react';
 
-export default function ProjectCard({ project, onSelect }) {
+export default function ProjectCard({ project, onSelect, isFeatured }) {
   const techList = Array.isArray(project.tech) ? project.tech : project.tech.split(', ');
 
   return (
@@ -70,6 +70,22 @@ export default function ProjectCard({ project, onSelect }) {
           className="text-slate-600 group-hover:text-sky-300 group-hover:translate-x-1 transition-all" 
         />
       </div>
+
+      {/* Live demo link for featured projects */}
+      {isFeatured && project.demoLink && project.demoLink !== '#' && (
+        <div className="mt-4">
+          <a
+            href={project.demoLink}
+            target="_blank"
+            rel="noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 text-sm font-medium transition-colors"
+          >
+            <ArrowUpRight size={14} weight="bold" />
+            {project.linkLabel || 'View Live Site'}
+          </a>
+        </div>
+      )}
     </motion.article>
   );
 }
