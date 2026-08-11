@@ -3,13 +3,16 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight } from '@phosphor-icons/react';
 
-export default function ProjectCard({ project, onSelect, isFeatured }) {
+export default function ProjectCard({ project, onSelect, isFeatured, isCompact }) {
   const techList = Array.isArray(project.tech) ? project.tech : project.tech.split(', ');
+  const hasLiveLink = project.demoLink && project.demoLink !== '#';
 
   return (
     <motion.article 
       layoutId={`project-container-${project.id}`}
-      className="group structured-container p-6 md:p-8 cursor-pointer flex flex-col focus-visible:ring-2 focus-visible:ring-sky-400 outline-none min-h-[320px]"
+      className={`group structured-container cursor-pointer focus-visible:ring-2 focus-visible:ring-sky-400 outline-none transition-all ${
+        isCompact ? 'p-5 min-h-[200px]' : 'p-6 md:p-8 min-h-[320px]'
+      }`}
       onClick={() => onSelect(project)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -18,7 +21,7 @@ export default function ProjectCard({ project, onSelect, isFeatured }) {
         }
       }}
       tabIndex={0}
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -2 }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
     >
       {/* Header metadata */}
@@ -28,10 +31,10 @@ export default function ProjectCard({ project, onSelect, isFeatured }) {
       </div>
 
       {/* Body */}
-      <div className="flex-grow mb-8 min-h-0">
+      <div className="flex-grow mb-6 min-h-0">
         <motion.h3 
           layoutId={`project-title-${project.id}`}
-          className="heading-card mb-2 group-hover:text-white transition-colors"
+          className={`heading-card mb-2 group-hover:text-white transition-colors ${isCompact ? 'text-lg' : ''}`}
         >
           {project.title}
         </motion.h3>
@@ -39,41 +42,41 @@ export default function ProjectCard({ project, onSelect, isFeatured }) {
         {project.subtitle && (
           <motion.p 
             layoutId={`project-subtitle-${project.id}`}
-            className="text-body-sm mb-4 line-clamp-1"
+            className={`text-body-sm mb-3 line-clamp-1 ${isCompact ? 'text-xs' : ''}`}
           >
             {project.subtitle}
           </motion.p>
         )}
         
-        <p className="text-body-sm line-clamp-3">
+        <p className={`text-body-sm line-clamp-2 ${isCompact ? 'text-xs text-slate-500' : ''}`}>
           {project.description}
         </p>
       </div>
 
       {/* Footer tech stack */}
-      <div className="flex items-center justify-between mt-auto pt-6 border-t border-border-subtle">
-        <div className="flex flex-wrap gap-2 text-meta">
-          {techList.slice(0, 3).map((t) => (
-            <span key={t} className="text-slate-500">
+      <div className="flex items-center justify-between mt-auto pt-4 border-t border-border-subtle">
+        <div className="flex flex-wrap gap-1.5 text-meta">
+          {techList.slice(0, isCompact ? 2 : 3).map((t) => (
+            <span key={t} className={`text-slate-500 ${isCompact ? 'text-xs' : ''}`}>
               {t}
             </span>
           ))}
-          {techList.length > 3 && (
+          {techList.length > (isCompact ? 2 : 3) && (
             <span className="text-slate-400">
-              +{techList.length - 3}
+              +{techList.length - (isCompact ? 2 : 3)}
             </span>
           )}
         </div>
         
         <ArrowRight 
           size={16} 
-          className="text-slate-600 group-hover:text-sky-300 group-hover:translate-x-1 transition-all" 
+          className={`text-slate-600 group-hover:text-sky-300 group-hover:translate-x-1 transition-all ${isCompact ? '' : ''}`} 
         />
       </div>
 
       {/* Live demo link for featured projects */}
-      {isFeatured && project.demoLink && project.demoLink !== '#' && (
-        <div className="mt-4">
+      {isFeatured && hasLiveLink && (
+        <div className="mt-3">
           <a
             href={project.demoLink}
             target="_blank"
@@ -84,6 +87,22 @@ export default function ProjectCard({ project, onSelect, isFeatured }) {
             <ArrowUpRight size={14} weight="bold" />
             {project.linkLabel || 'View Live Site'}
           </a>
+        </div>
+      )}
+
+      {/* Disabled state for internal/private projects */}
+      {isFeatured && !hasLiveLink && project.demoLink === '' && (
+        <div className="mt-3">
+          <span className="inline-flex items-center gap-1.5 text-slate-600 text-xs font-medium">
+            Private project
+          </span>
+        </div>
+      )}
+      {isFeatured && !hasLiveLink && project.demoLink === '#' && (
+        <div className="mt-3">
+          <span className="inline-flex items-center gap-1.5 text-slate-600 text-xs font-medium">
+            Internal tool
+          </span>
         </div>
       )}
     </motion.article>

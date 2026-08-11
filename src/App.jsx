@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   GithubLogo,
@@ -39,14 +39,14 @@ const contactLinks = [
 ];
 
 /* ── Minimalist Top Navigation ── */
-function Navbar() {
+function Navbar({ activeSection }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <>
       <nav className="fixed top-0 inset-x-0 z-50 h-16 border-b border-border-subtle bg-bg-base/80 backdrop-blur-md flex items-center justify-between px-6 md:px-12">
         <a
-          href="#"
+          href="#hero"
           className="font-semibold text-white tracking-tight flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm"
         >
           <div className="w-4 h-4 bg-white rounded-sm" />
@@ -55,15 +55,23 @@ function Navbar() {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              className="text-sm font-medium text-slate-400 hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm"
-            >
-              {l.label}
-            </a>
-          ))}
+          {navLinks.map((l) => {
+            const sectionId = l.href.replace("#", "");
+            const isActive = activeSection === sectionId;
+            return (
+              <a
+                key={l.label}
+                href={l.href}
+                className={`text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm ${
+                  isActive
+                    ? "text-white"
+                    : "text-slate-400 hover:text-white"
+                }`}
+              >
+                {l.label}
+              </a>
+            );
+          })}
           <div className="w-px h-4 bg-border-subtle mx-2" />
           {contactLinks.map((link) => (
             <a
@@ -123,6 +131,8 @@ function Navbar() {
 
 export default function App() {
   const [activeProject, setActiveProject] = useState(null);
+  const [activeSection, setActiveSection] = useState("hero");
+  const sectionRefs = useRef({});
 
   useEffect(() => {
     document.body.style.overflow = activeProject ? "hidden" : "";
@@ -131,11 +141,49 @@ export default function App() {
     };
   }, [activeProject]);
 
+  useEffect(() => {
+    const sections = ["hero", "skills", "projects", "roles", "about"];
+    const observers = [];
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      sectionRefs.current[id] = el;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(id);
+            }
+          });
+        },
+        { rootMargin: "-40% 0px -55% 0px" }
+      );
+
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
+  const featuredProjects = projects.filter((p) => p.category === "featured");
+  const schoolProjects = projects.filter((p) => p.category === "school");
+
+  /* First two featured are primary (full cards), rest are compact */
+  const primaryFeatured = featuredProjects.slice(0, 2);
+  const compactFeatured = featuredProjects.slice(2);
+
   return (
     <>
-      <Navbar />
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
+      <div className="grain-overlay" aria-hidden="true" />
+      <Navbar activeSection={activeSection} />
 
-      <main className="max-w-5xl mx-auto px-6 md:px-12 pt-32 pb-24">
+      <main id="main-content" className="max-w-5xl mx-auto px-6 md:px-12 pt-32 pb-24">
         {/* ═══════════ HERO ═══════════ */}
         <header
           className="py-20 md:py-32 border-b border-border-subtle"
@@ -197,53 +245,73 @@ export default function App() {
             </p>
           </div>
 
-          {/* Featured Projects */}
-          {projects.filter((p) => p.category === "featured").length > 0 && (
-            <div className="mb-20">
-              <span className="text-eyebrow block mb-6">Featured</span>
+          {/* Primary Featured Projects */}
+          {primaryFeatured.length > 0 && (
+            <div className="mb-16">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {projects
-                  .filter((p) => p.category === "featured")
-                  .map((project, i) => (
-                    <motion.div
-                      key={project.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{ duration: 0.5, delay: i * 0.1 }}
-                    >
-                      <ProjectCard
-                        project={project}
-                        onSelect={setActiveProject}
-                        isFeatured={true}
-                      />
-                    </motion.div>
-                  ))}
+                {primaryFeatured.map((project, i) => (
+                  <motion.div
+                    key={project.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                  >
+                    <ProjectCard
+                      project={project}
+                      onSelect={setActiveProject}
+                      isFeatured={true}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Compact Featured Projects */}
+          {compactFeatured.length > 0 && (
+            <div className="mb-16">
+              <span className="text-eyebrow block mb-6">More Work</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {compactFeatured.map((project, i) => (
+                  <motion.div
+                    key={project.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5, delay: i * 0.08 }}
+                  >
+                    <ProjectCard
+                      project={project}
+                      onSelect={setActiveProject}
+                      isFeatured={true}
+                      isCompact={true}
+                    />
+                  </motion.div>
+                ))}
               </div>
             </div>
           )}
 
           {/* School Projects */}
-          {projects.filter((p) => p.category === "school").length > 0 && (
+          {schoolProjects.length > 0 && (
             <div>
               <span className="text-eyebrow block mb-6">School Projects</span>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projects
-                  .filter((p) => p.category === "school")
-                  .map((project, i) => (
-                    <motion.div
-                      key={project.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{ duration: 0.5, delay: i * 0.1 }}
-                    >
-                      <ProjectCard
-                        project={project}
-                        onSelect={setActiveProject}
-                      />
-                    </motion.div>
-                  ))}
+                {schoolProjects.map((project, i) => (
+                  <motion.div
+                    key={project.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                  >
+                    <ProjectCard
+                      project={project}
+                      onSelect={setActiveProject}
+                    />
+                  </motion.div>
+                ))}
               </div>
             </div>
           )}
@@ -317,7 +385,6 @@ export default function App() {
         {/* ═══════════ ABOUT ═══════════ */}
         <section className="py-24" id="about">
           <div className="mb-16 max-w-2xl">
-            <span className="text-eyebrow">Background</span>
             <h2 className="heading-section">About</h2>
             <p className="text-body">
               I care about software that actually helps people, not just software that ships. That means clean code, straightforward UIs, and not overcomplicating things.

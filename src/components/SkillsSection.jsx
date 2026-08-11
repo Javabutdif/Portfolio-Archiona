@@ -67,7 +67,6 @@ export default function SkillsSection() {
   return (
     <section className="py-24 border-b border-border-subtle" id="skills">
       <div className="mb-16 max-w-2xl">
-        <span className="text-eyebrow">Capabilities</span>
         <h2 className="heading-section">Skills</h2>
         <p className="text-body">
           I work across the full product lifecycle, from idea to shipping. Software that works and stays maintainable.
