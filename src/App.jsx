@@ -373,10 +373,10 @@ export default function App() {
                 <span className="text-meta whitespace-nowrap">2026</span>
               </div>
               <p className="text-body-sm">
-                An AI-powered lesson planning platform I built on my own.
-                Currently in use by 10+ users and deployed. Paused new development
-                this year due to work commitments, but the platform remains live
-                and functional. Built end-to-end: design, frontend, backend, and deployment.
+                An AI-powered lesson planning platform I built on my own, from
+                design and frontend to backend and deployment. In use by 10+
+                users and actively evolving — new features and refinements are
+                still being shipped. Built end-to-end: design, frontend, backend, and deployment.
               </p>
             </motion.div>
           </div>
