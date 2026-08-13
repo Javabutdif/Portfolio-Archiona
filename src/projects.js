@@ -4,7 +4,7 @@ export const projects = [
     title: "Lessora AI",
     subtitle: "AI-Powered Lesson Planning Platform",
     description:
-      "An AI lesson planning platform for K-12 teachers. Pick a topic, grade level, and learning objective, then it generates a complete, curriculum-aligned lesson plan you can use straight in class — no account required. Built as a Next.js 15 monolith with MongoDB for storage. Powered by the OpenAI API, with daily AI credits for anonymous sessions and registered teachers, session-based history, DOC/PDF export, admin dashboard, and usage tracking.",
+      "An AI lesson planning platform for K-12 teachers. Pick a topic, grade level, and learning objective, then it generates a complete, curriculum-aligned lesson plan you can use straight in class and no account required. Built as a Next.js 15 monolith with MongoDB for storage. Powered by the OpenAI API, with daily AI credits for anonymous sessions, session-based history, DOC/PDF export, admin dashboard, and usage tracking.",
     tech: ["Next.js", "TypeScript", "MongoDB", "OpenAI API", "Resend"],
     demoLink: "https://lessora.ajgenabio.me/",
     linkLabel: "View Live Site",
