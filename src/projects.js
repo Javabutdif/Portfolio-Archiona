@@ -40,14 +40,14 @@ export const projects = [
   {
     id: 7,
     title: "Archiona",
-    subtitle: "Pre-coding gate CLI tool",
+    subtitle: "Persona-gated pre-coding workflow for AI agents",
     description:
-      "A CLI tool that makes coding agents plan before they write code. Scaffolds .archiona/, creates reviewable plans, seeds skills, and wires into opencode/Cursor/Cline/Copilot. Approve the plan, then it codes.",
-    tech: ["Node.js", "TypeScript", "npm CLI"],
+      "A CLI tool that makes coding agents plan before they write code. Scaffolds .archiona/, creates reviewable plans, decomposes goals into persona-gated tasks, and auto-injects the active persona skill into each agent's instruction file via `archiona hook`. Eight-phase workflow — evidence, design, tests, approval, build, validate, review — with a 15-persona registry (pm, researcher, architect, developer, qa, reviewer, security, etc.) and skills the agent follows instead of its own defaults. Wires into opencode, Cursor, Cline, Copilot, Continue, Codex, and Aider.",
+    tech: ["Node.js", "TypeScript", "npm CLI", "Markdown"],
     demoLink: "#",
     linkLabel: "View on npm",
     year: "2026",
-    role: "Creator / Founder",
+    role: "AI Workflow / Founder",
     category: "featured",
   },
   {
