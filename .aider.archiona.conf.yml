@@ -10,16 +10,19 @@ instructions: |
   Follow this workflow before writing or modifying any code:
   
   1. Run `archiona get-context .` and read the workflow. The workflow is the source of truth — do not invent steps.
-  2. Find or create a plan at `.archiona/plans/<slug>.md` with `archiona plan --slug <slug> --title "<title>"`.
-  3. Fill every section: Problem, Files, Dependencies, Test plan, Rollback.
-  4. Wait for the user to tick `- [x] **Approved**` before writing any code.
-  5. Read the matching skill under `.archiona/skills/` before writing code. Skills are the source of truth for style, structure, and conventions. Do not generate code from your defaults — follow the skill.
-  6. Implement only the files listed in the plan. Do not touch anything else.
-  7. When the change is ready, run `archiona validate` and fix every error before declaring done.
-  8. If the user request needs a file not in the plan, stop and ask — do not silently expand scope.
-  9. If the skill is silent on something and there is no existing project file to follow, stop and ask.
+  2. Find or create a plan at `.archiona/plans/<slug>.md` with `archiona plan --slug <slug> --title "<title>" [--goal "..."]`.
+  3. Check `currentPersona` in the plan frontmatter. The matching persona skill is already included below — follow it exactly. Do not generate from your own defaults.
+  4. Fill every section: Goal, Problem, Files, Dependencies, Test plan, Rollback, Persona Tasks.
+  5. Wait for the user to tick `- [x] **Approved**` before writing any code.
+  6. Read the matching domain skill under `.archiona/skills/` (typescript, api-design, frontend-design, etc.). Domain skills are the source of truth for style, structure, and conventions.
+  7. Implement only the files listed in the plan. Mark each Persona Task as complete when done.
+  8. When the change is ready, run `archiona validate` and fix every error before declaring done.
+  9. If the user request needs a file not in the plan, stop and ask — do not silently expand scope.
+  10. If the skill is silent on something and there is no existing project file to follow, stop and ask.
+  11. **Never read or log the contents of `.env`, `.env.*`, `.pem`, `.key`, `~/.ssh/*`, or any secret-bearing file.** Reference paths only, never values.
   
   If the workflow and the user request conflict, the workflow wins. Edit the workflow or the skill (not the plan) when the rules need to change.
+
 
   Workflow invariants from .archiona/workflow.md:
     # Archiona Workflow
