@@ -2,7 +2,7 @@ export const projects = [
   {
     id: 5,
     title: "Lessora AI",
-    subtitle: "AI-Powered Lesson Planning Platform",
+    subtitle: "Lesson Planning Platform",
     description:
       "A platform that transforms simple teacher inputs including topic, grade level, and duration into complete curriculum-aligned lesson plans in minutes, reducing preparation time so educators can focus on teaching. Built with Next.js 15 App Router as a monolith, a TypeScript service layer, MongoDB, the OpenAI GPT-4o-mini model, Resend for email, and PayMongo for donations. Anonymous users can generate without signing up with daily credit quotas, lesson history, refinement, preview, DOC and PDF export, an admin dashboard with user management, and scheduled daily credit resets.",
     tech: [
@@ -24,7 +24,7 @@ export const projects = [
     title: "PSITS Website",
     subtitle: "Student Organization Management & E-Commerce Platform",
     description:
-      "A comprehensive web platform for the Philippine Society of Information Technology Students, a student organization with over three thousand members at the University of Cebu. Replaced Google Forms and manual spreadsheets with merchandise ordering, event management and attendance tracking, membership lifecycle management, certificate generation, recruitment tracking, raffle systems, and discount code management. Built on an Express and TypeScript backend with MongoDB, serving a React 19 TypeScript frontend alongside a legacy React 18 JavaScript frontend being migrated. Features JWT authentication with token rotation,  Cloudflare R2 object storage.",
+      "A comprehensive web platform for the Philippine Society of Information Technology Students, a student organization with over three thousand members at the University of Cebu. Replaced Google Forms and manual spreadsheets with merchandise ordering, event management and attendance tracking, membership lifecycle management, certificate generation, recruitment tracking, raffle systems, and discount code management. Built on an Express and TypeScript backend with MongoDB, serving a React 19 TypeScript frontend alongside a legacy React 18 JavaScript frontend being migrated. Features JWT authentication with token rotation, AWS S3 and Cloudflare R2 object storage, and Puppeteer-powered PDF certificate generation.",
     tech: [
       "React 19",
       "TypeScript",
@@ -41,33 +41,33 @@ export const projects = [
   {
     id: 6,
     title: "Noetix",
-    subtitle: "AI Agent / AI Orchestrator",
+    subtitle: "Persona-aware orchestration service",
     description:
       "A persona-aware orchestration service that transforms data payloads into structured natural language responses with traceable guardrail matches. Clients send a persona, goal, and data payload, and Noetix returns results with documented guardrail attribution. Features sixteen personas with guardrail inheritance chains, TTL-managed session state, dynamic system prompt construction, API key authentication, per-IP rate limiting, and complete error code to HTTP status mapping. Includes a tool selection loop where callers provide available tools, Noetix decides which to invoke next, and results feed back until the goal is complete. Built on pure Node.js HTTP with no web framework.",
     tech: ["Node.js", "OpenAI API", "HTTP"],
     demoLink: "#",
     linkLabel: "View Documentation",
     year: "2026",
-    role: "AI Orchestrator / Founder",
+    role: "Founder / Developer",
     category: "featured",
   },
   {
     id: 7,
     title: "Archiona",
-    subtitle: "Persona-gated pre-coding workflow for AI agents",
+    subtitle: "Pre-coding workflow for development agents",
     description:
       "A CLI tool and workflow system that enforces a pre-coding gate for development. Before writing any code, it produces a reviewable plan including files to touch, test strategy, and rollback path, with coding beginning only after human approval. Scaffolds an archiona directory into any project, decomposes goals into persona-gated sub-tasks, validates plan completeness with the validate command, seeds project skills so agents follow your conventions instead of their defaults, and auto-injects the active persona skill into each agent instruction file via the hook command. Integrates with opencode, Cursor, Copilot, Cline, Codex CLI, Continue, and Aider.",
     tech: ["Node.js", "TypeScript", "npm CLI", "Markdown"],
     demoLink: "#",
     linkLabel: "View on npm",
     year: "2026",
-    role: "AI Workflow / Founder",
+    role: "Workflow / Founder",
     category: "featured",
   },
   {
     id: 8,
     title: "Kinora AI",
-    subtitle: "Personal video + image studio",
+    subtitle: "Personal video and image studio",
     description:
       "A self-hosted creative studio for video and image generation. Write a prompt, press record, and receive cinematic output including video up to sixty seconds at 4K resolution and images from 1K to 4K. Features include prompt refinement, seed locking for consistency, batch generation, image-to-image through reference images, wallpaper mode with anime auto-modifiers, a mood board with A-B comparison slider, generation history, and prompt templates, all persisted to localStorage. Built with Next.js 16, React 19, Tailwind version 4, and the Agnes API, wrapped in a warm editorial photo lab design language.",
     tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind v4"],
@@ -80,7 +80,7 @@ export const projects = [
   {
     id: 2,
     title: "MentalHelp PH",
-    subtitle: "Capstone - therapist matching",
+    subtitle: "Capstone project",
     description:
       "A platform that connects people in the Philippines with therapists who fit their needs. Users answer a questionnaire and get matched with professionals. Built this as my capstone project because I kept seeing people struggle to find affordable mental health support.",
     tech: ["React", "Express", "Node.js", "XAMPP", "SQL"],

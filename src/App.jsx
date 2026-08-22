@@ -63,9 +63,7 @@ function Navbar({ activeSection }) {
                 key={l.label}
                 href={l.href}
                 className={`text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm ${
-                  isActive
-                    ? "text-white"
-                    : "text-slate-400 hover:text-white"
+                  isActive ? "text-white" : "text-slate-400 hover:text-white"
                 }`}
               >
                 {l.label}
@@ -158,7 +156,7 @@ export default function App() {
             }
           });
         },
-        { rootMargin: "-40% 0px -55% 0px" }
+        { rootMargin: "-40% 0px -55% 0px" },
       );
 
       observer.observe(el);
@@ -183,7 +181,10 @@ export default function App() {
       <div className="grain-overlay" aria-hidden="true" />
       <Navbar activeSection={activeSection} />
 
-      <main id="main-content" className="max-w-5xl mx-auto px-6 md:px-12 pt-32 pb-24">
+      <main
+        id="main-content"
+        className="max-w-5xl mx-auto px-6 md:px-12 pt-32 pb-24"
+      >
         {/* ═══════════ HERO ═══════════ */}
         <header
           className="py-20 md:py-32 border-b border-border-subtle"
@@ -210,7 +211,9 @@ export default function App() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-body text-lg md:text-xl mb-10"
             >
-              I build web apps and internal tools, mostly for organizations and small teams. I like adding AI where it actually helps, not just because it's trendy.
+              I build web apps and internal tools, mostly for organizations and
+              small teams. I like adding AI where it actually helps, not just
+              because it's trendy.
             </motion.p>
 
             <motion.div
@@ -241,7 +244,8 @@ export default function App() {
             <span className="text-eyebrow">Selected Work</span>
             <h2 className="heading-section">Projects</h2>
             <p className="text-body">
-              Web platforms, internal tools, and AI experiments. Most of this work is for student orgs or personal projects.
+              Web platforms, internal tools, and AI experiments. Most of this
+              work is for student orgs or personal projects.
             </p>
           </div>
 
@@ -323,7 +327,8 @@ export default function App() {
             <span className="text-eyebrow">Roles & Commitment</span>
             <h2 className="heading-section">Where I invest my time</h2>
             <p className="text-body">
-               Beyond the project cards above, with some context on how I engage with each.
+              Beyond the project cards above, with some context on how I engage
+              with each.
             </p>
           </div>
 
@@ -339,7 +344,8 @@ export default function App() {
                 <div>
                   <h3 className="heading-card text-lg">Lead Developer</h3>
                   <p className="text-body-sm mt-1">
-                    PSITS (Philippine Society of Information Technology Students)
+                    PSITS (Philippine Society of Information Technology
+                    Students)
                   </p>
                 </div>
                 <span className="text-meta whitespace-nowrap">
@@ -348,11 +354,12 @@ export default function App() {
               </div>
               <p className="text-body-sm">
                 Built the PSITS website from scratch and served as Lead
-                Developer for over a year. Stepped back in August last year due
-                to work commitments, and a new team of developers took over
-                 maintenance. This marks the site's third generation. The
-                platform continues to serve 3,000+ members for merchandise,
-                events, and operations.
+                Developer. The platform was upgraded from Google Forms and
+                manual spreadsheets to a full web system handling merchandise,
+                events, membership lifecycle, certificate generation, and
+                recruitment. This marks the site third generation. The platform
+                continues to serve over three thousand members for operations
+                and events.
               </p>
             </motion.div>
 
@@ -373,10 +380,37 @@ export default function App() {
                 <span className="text-meta whitespace-nowrap">2026</span>
               </div>
               <p className="text-body-sm">
-                An AI-powered lesson planning platform I built on my own, from
-                design and frontend to backend and deployment. In use by 10+
-                users and actively evolving — new features and refinements are
-                still being shipped. Built end-to-end: design, frontend, backend, and deployment.
+                A lesson planning platform I built end to end, from design and
+                frontend to backend and deployment. Transforms simple inputs
+                like topic and grade level into complete curriculum-aligned
+                plans. Deployed and in use, with ongoing feature additions
+                including refined export options and expanded scheduling tools.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="structured-container p-6 md:p-8"
+            >
+              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+                <div>
+                  <h3 className="heading-card text-lg">
+                    AI Engineer / Developer
+                  </h3>
+                  <p className="text-body-sm mt-1">Noetix</p>
+                </div>
+                <span className="text-meta whitespace-nowrap">2026</span>
+              </div>
+              <p className="text-body-sm">
+                A persona-aware orchestration service that transforms data
+                payloads into structured natural language responses with
+                traceable guardrail matches. Features sixteen personas with
+                inheritance chains, session state management, dynamic prompt
+                construction, and a tool-selection loop for multi-step task
+                coordination. Built on pure Node.js HTTP with no web framework.
               </p>
             </motion.div>
           </div>
@@ -387,7 +421,9 @@ export default function App() {
           <div className="mb-16 max-w-2xl">
             <h2 className="heading-section">About</h2>
             <p className="text-body">
-              I care about software that actually helps people, not just software that ships. That means clean code, straightforward UIs, and not overcomplicating things.
+              I care about software that actually helps people, not just
+              software that ships. That means clean code, straightforward UIs,
+              and not overcomplicating things.
             </p>
           </div>
 
