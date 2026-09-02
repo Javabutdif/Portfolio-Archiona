@@ -1,9 +1,10 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { X, ArrowUpRight } from '@phosphor-icons/react';
 
 export default function Modal({ project, onClose }) {
+  const reduce = useReducedMotion();
   if (!project) return null;
 
   const techList = Array.isArray(project.tech) ? project.tech : project.tech.split(', ');
@@ -11,19 +12,19 @@ export default function Modal({ project, onClose }) {
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8">
-        {/* Backdrop - pure black with slight opacity */}
-        <motion.div 
+        {/* Backdrop */}
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: reduce ? 0 : 0.15 }}
           className="absolute inset-0 bg-black/70 backdrop-blur-sm"
           onClick={onClose}
         />
 
-        {/* Modal Card - Linear style sheet */}
-        <motion.div 
-          layoutId={`project-container-${project.id}`}
+        {/* Modal Card */}
+        <motion.div
+          layoutId={reduce ? undefined : `project-container-${project.id}`}
           className="relative w-full max-w-3xl max-h-[90dvh] flex flex-col bg-surface border border-border-strong rounded-2xl shadow-2xl overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
@@ -40,16 +41,16 @@ export default function Modal({ project, onClose }) {
           </div>
 
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 lg:p-10">
-            <motion.h3 
-              layoutId={`project-title-${project.id}`}
+            <motion.h3
+              layoutId={reduce ? undefined : `project-title-${project.id}`}
               className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight"
             >
               {project.title}
             </motion.h3>
 
             {project.subtitle && (
-              <motion.p 
-                layoutId={`project-subtitle-${project.id}`}
+              <motion.p
+                layoutId={reduce ? undefined : `project-subtitle-${project.id}`}
                 className="text-body text-sky-300/90 mb-6 sm:mb-8"
               >
                 {project.subtitle}

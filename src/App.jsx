@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   GithubLogo,
   LinkedinLogo,
@@ -131,6 +131,7 @@ export default function App() {
   const [activeProject, setActiveProject] = useState(null);
   const [activeSection, setActiveSection] = useState("hero");
   const sectionRefs = useRef({});
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     document.body.style.overflow = activeProject ? "hidden" : "";
@@ -187,13 +188,13 @@ export default function App() {
       >
         {/* ═══════════ HERO ═══════════ */}
         <header
-          className="py-20 md:py-32 border-b border-border-subtle"
+          className="pt-20 pb-16 md:pt-24 md:pb-20 border-b border-border-subtle"
           id="hero"
         >
           <div className="max-w-3xl">
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={reduce ? false : { opacity: 0, y: 10 }}
+              animate={reduce ? false : { opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               <h1 className="heading-display mb-2">
@@ -206,8 +207,8 @@ export default function App() {
             </motion.div>
 
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={reduce ? false : { opacity: 0, y: 10 }}
+              animate={reduce ? false : { opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-body text-lg md:text-xl mb-10"
             >
@@ -217,8 +218,8 @@ export default function App() {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={reduce ? false : { opacity: 0, y: 10 }}
+              animate={reduce ? false : { opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               className="flex gap-4"
             >
@@ -256,8 +257,8 @@ export default function App() {
                 {primaryFeatured.map((project, i) => (
                   <motion.div
                     key={project.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={reduce ? false : { opacity: 0, y: 20 }}
+                    whileInView={reduce ? false : { opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.5, delay: i * 0.1 }}
                   >
@@ -275,13 +276,12 @@ export default function App() {
           {/* Compact Featured Projects */}
           {compactFeatured.length > 0 && (
             <div className="mb-16">
-              <span className="text-eyebrow block mb-6">More Work</span>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {compactFeatured.map((project, i) => (
                   <motion.div
                     key={project.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={reduce ? false : { opacity: 0, y: 20 }}
+                    whileInView={reduce ? false : { opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.5, delay: i * 0.08 }}
                   >
@@ -305,8 +305,8 @@ export default function App() {
                 {schoolProjects.map((project, i) => (
                   <motion.div
                     key={project.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={reduce ? false : { opacity: 0, y: 20 }}
+                    whileInView={reduce ? false : { opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.5, delay: i * 0.1 }}
                   >
@@ -334,8 +334,8 @@ export default function App() {
 
           <div className="flex flex-col gap-8">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              whileInView={reduce ? false : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5 }}
               className="structured-container p-6 md:p-8"
@@ -364,8 +364,8 @@ export default function App() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              whileInView={reduce ? false : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="structured-container p-6 md:p-8"
@@ -389,8 +389,8 @@ export default function App() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              whileInView={reduce ? false : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
               className="structured-container p-6 md:p-8"

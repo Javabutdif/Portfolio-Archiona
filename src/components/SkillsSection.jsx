@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Atom,
   HardDrives,
@@ -48,7 +48,7 @@ const skills = [
     items: [
       { name: "Node.js & Express", icon: <HardDrives /> },
       { name: "Java & C# / .NET", icon: <Code /> },
-      { name: "RESTful APIs", icon: <Stack /> },
+      { name: "RESTful APIs", icon: <Circuitry /> },
       { name: "MongoDB & MySQL", icon: <Database /> },
     ],
   },
@@ -64,6 +64,7 @@ const skills = [
 ];
 
 export default function SkillsSection() {
+  const reduce = useReducedMotion();
   return (
     <section className="py-24 border-b border-border-subtle" id="skills">
       <div className="mb-16 max-w-2xl">
@@ -77,8 +78,8 @@ export default function SkillsSection() {
         {skills.map((group, groupIdx) => (
           <motion.div
             key={group.category}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={reduce ? false : { opacity: 0, y: 20 }}
+            whileInView={reduce ? false : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: groupIdx * 0.1 }}
             className="structured-container p-6 flex flex-col"

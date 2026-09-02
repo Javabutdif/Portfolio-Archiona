@@ -1,15 +1,16 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight } from '@phosphor-icons/react';
 
 export default function ProjectCard({ project, onSelect, isFeatured, isCompact }) {
+  const reduce = useReducedMotion();
   const techList = Array.isArray(project.tech) ? project.tech : project.tech.split(', ');
   const hasLiveLink = project.demoLink && project.demoLink !== '#';
 
   return (
-    <motion.article 
-      layoutId={`project-container-${project.id}`}
+    <motion.article
+      layoutId={reduce ? undefined : `project-container-${project.id}`}
       className={`group structured-container cursor-pointer focus-visible:ring-2 focus-visible:ring-sky-400 outline-none transition-all ${
         isCompact ? 'p-5 min-h-[200px]' : 'p-6 md:p-8 min-h-[320px]'
       }`}
@@ -21,7 +22,7 @@ export default function ProjectCard({ project, onSelect, isFeatured, isCompact }
         }
       }}
       tabIndex={0}
-      whileHover={{ y: -2 }}
+      whileHover={reduce ? false : { y: -2 }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
     >
       {/* Header metadata */}
@@ -32,16 +33,16 @@ export default function ProjectCard({ project, onSelect, isFeatured, isCompact }
 
       {/* Body */}
       <div className="flex-grow mb-6 min-h-0">
-        <motion.h3 
-          layoutId={`project-title-${project.id}`}
+        <motion.h3
+          layoutId={reduce ? undefined : `project-title-${project.id}`}
           className={`heading-card mb-2 group-hover:text-white transition-colors ${isCompact ? 'text-lg' : ''}`}
         >
           {project.title}
         </motion.h3>
-        
+
         {project.subtitle && (
-          <motion.p 
-            layoutId={`project-subtitle-${project.id}`}
+          <motion.p
+            layoutId={reduce ? undefined : `project-subtitle-${project.id}`}
             className={`text-body-sm mb-3 line-clamp-1 ${isCompact ? 'text-xs' : ''}`}
           >
             {project.subtitle}
