@@ -2,24 +2,24 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  Atom,
-  HardDrives,
-  Database,
-  Browser,
-  Cloud,
-  TerminalWindow,
-  DeviceMobile,
-  Robot,
-  GitBranch,
-  ChatsCircle,
-  Stack,
-  Circuitry,
   Sparkle,
   Lightning,
-  Code,
+  Robot,
+  ChatsCircle,
+  GitBranch,
+  Circuitry,
+  Atom,
+  Browser,
   Monitor,
-  Globe,
+  Code,
+  HardDrives,
+  FileCode,
+  PlugsConnected,
+  Database,
   Wrench,
+  Cloud,
+  Stack,
+  Devices,
 } from "@phosphor-icons/react";
 
 const skills = [
@@ -40,7 +40,7 @@ const skills = [
       { name: "React & TypeScript", icon: <Atom /> },
       { name: "Responsive UI Systems", icon: <Browser /> },
       { name: "Tailwind & Design Systems", icon: <Monitor /> },
-      { name: "UI Implementation", icon: <Code /> },
+      { name: "UI Implementation", icon: <FileCode /> },
     ],
   },
   {
@@ -48,7 +48,7 @@ const skills = [
     items: [
       { name: "Node.js & Express", icon: <HardDrives /> },
       { name: "Java & C# / .NET", icon: <Code /> },
-      { name: "RESTful APIs", icon: <Circuitry /> },
+      { name: "RESTful APIs", icon: <PlugsConnected /> },
       { name: "MongoDB & MySQL", icon: <Database /> },
     ],
   },
@@ -57,8 +57,8 @@ const skills = [
     items: [
       { name: "Full-Stack Delivery", icon: <Wrench /> },
       { name: "Deployment & Hosting", icon: <Cloud /> },
-      { name: "Git & Version Control", icon: <GitBranch /> },
-      { name: "System Integration", icon: <Globe /> },
+      { name: "Git & Version Control", icon: <Stack /> },
+      { name: "System Integration", icon: <Devices /> },
     ],
   },
 ];
@@ -70,7 +70,8 @@ export default function SkillsSection() {
       <div className="mb-16 max-w-2xl">
         <h2 className="heading-section">Skills</h2>
         <p className="text-body">
-          I work across the full product lifecycle, from idea to shipping. Software that works and stays maintainable.
+          I work across the full product lifecycle, from idea to shipping.
+          Software that works and stays maintainable.
         </p>
       </div>
 
@@ -91,12 +92,12 @@ export default function SkillsSection() {
               {group.items.map((skill) => (
                 <li
                   key={skill.name}
-                  className="flex items-center gap-3 text-body-sm group cursor-default"
+                  className="flex items-center gap-3 text-body-sm group"
                 >
-                  <span className="text-slate-500 group-hover:text-white transition-colors">
+                  <span className="text-slate-500 light:text-zinc-500 group-hover:text-white light:group-hover:text-zinc-900 transition-colors">
                     {skill.icon}
                   </span>
-                  <span className="group-hover:text-slate-200 transition-colors">
+                  <span className="group-hover:text-slate-200 light:group-hover:text-zinc-800 transition-colors">
                     {skill.name}
                   </span>
                 </li>

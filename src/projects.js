@@ -72,7 +72,7 @@ export const projects = [
       "A self-hosted creative studio for video and image generation. Write a prompt, press record, and receive cinematic output including video up to sixty seconds at 4K resolution and images from 1K to 4K. Features include prompt refinement, seed locking for consistency, batch generation, image-to-image through reference images, wallpaper mode with anime auto-modifiers, a mood board with A-B comparison slider, generation history, and prompt templates, all persisted to localStorage. Built with Next.js 16, React 19, Tailwind version 4, and the Agnes API, wrapped in a warm editorial photo lab design language.",
     tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind v4"],
     demoLink: "",
-    linkLabel: "",
+    linkLabel: "Private project",
     year: "2026",
     role: "Fullstack Developer / Founder",
     category: "featured",

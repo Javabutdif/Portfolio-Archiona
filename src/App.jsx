@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   GithubLogo,
@@ -42,18 +42,31 @@ const contactLinks = [
 function Navbar({ activeSection }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    function onKey(e) {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    }
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <>
-      <nav className="fixed top-0 inset-x-0 z-50 h-16 border-b border-border-subtle bg-bg-base/80 backdrop-blur-md flex items-center justify-between px-6 md:px-12">
+      <nav className="fixed top-0 inset-x-0 z-50 h-16 border-b border-border-subtle bg-bg-base/80 light:bg-white/80 backdrop-blur-md flex items-center justify-between px-6 md:px-12">
         <a
           href="#hero"
-          className="font-semibold text-white tracking-tight flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm"
+          className="font-semibold text-white light:text-zinc-900 tracking-tight flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm"
         >
-          <div className="w-4 h-4 bg-white rounded-sm" />
+          <div className="w-4 h-4 bg-white light:bg-sky-600 rounded-sm" />
           AJG
         </a>
 
-        {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((l) => {
             const sectionId = l.href.replace("#", "");
@@ -63,7 +76,9 @@ function Navbar({ activeSection }) {
                 key={l.label}
                 href={l.href}
                 className={`text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm ${
-                  isActive ? "text-white" : "text-slate-400 hover:text-white"
+                  isActive
+                    ? "text-white light:text-zinc-900"
+                    : "text-slate-400 hover:text-white light:text-zinc-500 light:hover:text-zinc-900"
                 }`}
               >
                 {l.label}
@@ -77,7 +92,7 @@ function Navbar({ activeSection }) {
               href={link.href}
               target="_blank"
               rel="noreferrer"
-              className="text-slate-400 hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm"
+              className="text-slate-400 hover:text-white light:text-zinc-500 light:hover:text-zinc-900 transition-colors focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm"
               aria-label={link.label}
             >
               {link.icon}
@@ -85,29 +100,30 @@ function Navbar({ activeSection }) {
           ))}
         </div>
 
-        {/* Mobile Toggle */}
         <button
-          className="md:hidden text-slate-400 hover:text-white focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm"
+          className="md:hidden text-slate-400 hover:text-white light:text-zinc-500 light:hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
+          aria-expanded={mobileMenuOpen}
         >
           {mobileMenuOpen ? <X size={20} /> : <List size={20} />}
         </button>
       </nav>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-16 z-40 bg-bg-base border-b border-border-subtle md:hidden flex flex-col p-6">
-          {navLinks.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-lg font-medium text-slate-300 py-4 border-b border-border-subtle hover:text-white"
-            >
-              {l.label}
-            </a>
-          ))}
+        <div className="fixed inset-0 top-16 z-40 bg-bg-base light:bg-white border-b border-border-subtle md:hidden flex flex-col p-6">
+          <div className="flex flex-col">
+            {navLinks.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-lg font-medium text-slate-300 light:text-zinc-700 py-4 border-b border-border-subtle hover:text-white light:hover:text-zinc-900 focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm"
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
           <div className="flex gap-6 mt-8">
             {contactLinks.map((link) => (
               <a
@@ -115,7 +131,7 @@ function Navbar({ activeSection }) {
                 href={link.href}
                 target="_blank"
                 rel="noreferrer"
-                className="text-slate-400 hover:text-white flex items-center gap-2"
+                className="text-slate-400 hover:text-white light:text-zinc-500 light:hover:text-zinc-900 flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm"
               >
                 {link.icon} {link.label}
               </a>
@@ -142,29 +158,33 @@ export default function App() {
 
   useEffect(() => {
     const sections = ["hero", "skills", "projects", "roles", "about"];
-    const observers = [];
+    const ratios = {};
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          ratios[entry.target.id] = entry.isIntersecting ? entry.intersectionRatio : 0;
+        });
+        let best = null;
+        let bestRatio = 0;
+        sections.forEach((id) => {
+          if ((ratios[id] || 0) > bestRatio) {
+            bestRatio = ratios[id];
+            best = id;
+          }
+        });
+        if (best && bestRatio > 0) setActiveSection(best);
+      },
+      { rootMargin: "-20% 0px -40% 0px", threshold: [0, 0.25, 0.5, 0.75] },
+    );
 
     sections.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
       sectionRefs.current[id] = el;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActiveSection(id);
-            }
-          });
-        },
-        { rootMargin: "-40% 0px -55% 0px" },
-      );
-
       observer.observe(el);
-      observers.push(observer);
     });
 
-    return () => observers.forEach((o) => o.disconnect());
+    return () => observer.disconnect();
   }, []);
 
   const featuredProjects = projects.filter((p) => p.category === "featured");
@@ -188,23 +208,19 @@ export default function App() {
       >
         {/* ═══════════ HERO ═══════════ */}
         <header
-          className="pt-20 pb-16 md:pt-24 md:pb-20 border-b border-border-subtle"
+          className="pt-10 pb-16 md:pt-12 md:pb-20 border-b border-border-subtle"
           id="hero"
         >
           <div className="max-w-3xl">
-            <motion.div
+            <motion.h1
               initial={reduce ? false : { opacity: 0, y: 10 }}
               animate={reduce ? false : { opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
+              className="heading-display mb-6"
             >
-              <h1 className="heading-display mb-2">
-                Anton James Genabio. <br />
-                <span className="text-slate-500">Full-Stack Developer.</span>
-              </h1>
-              <div className="text-xl md:text-2xl font-medium text-slate-400 mb-6 flex items-center gap-2">
-                Building custom web apps and automation-focused products
-              </div>
-            </motion.div>
+              Anton James Genabio. <br />
+              <span className="text-slate-500 light:text-zinc-500">Full-Stack Developer.</span>
+            </motion.h1>
 
             <motion.p
               initial={reduce ? false : { opacity: 0, y: 10 }}
@@ -212,9 +228,9 @@ export default function App() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-body text-lg md:text-xl mb-10"
             >
-              I build web apps and internal tools, mostly for organizations and
-              small teams. I like adding AI where it actually helps, not just
-              because it's trendy.
+              I build web apps and internal tools for organizations and small
+              teams. I add AI where it actually helps, not just because it is
+              trendy.
             </motion.p>
 
             <motion.div
@@ -242,7 +258,6 @@ export default function App() {
         {/* ═══════════ PROJECTS ═══════════ */}
         <section className="py-24 border-b border-border-subtle" id="projects">
           <div className="mb-16 max-w-2xl">
-            <span className="text-eyebrow">Selected Work</span>
             <h2 className="heading-section">Projects</h2>
             <p className="text-body">
               Web platforms, internal tools, and AI experiments. Most of this
@@ -300,7 +315,7 @@ export default function App() {
           {/* School Projects */}
           {schoolProjects.length > 0 && (
             <div>
-              <span className="text-eyebrow block mb-6">School Projects</span>
+              <h3 className="heading-card text-lg mb-6">School Projects</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {schoolProjects.map((project, i) => (
                   <motion.div
@@ -324,11 +339,10 @@ export default function App() {
         {/* ═══════════ ROLES & COMMITMENT ═══════════ */}
         <section className="py-24 border-b border-border-subtle" id="roles">
           <div className="mb-16 max-w-2xl">
-            <span className="text-eyebrow">Roles & Commitment</span>
             <h2 className="heading-section">Where I invest my time</h2>
             <p className="text-body">
-              Beyond the project cards above, with some context on how I engage
-              with each.
+              Roles and commitments beyond the project cards, with context on
+              how I engage with each.
             </p>
           </div>
 
@@ -349,7 +363,7 @@ export default function App() {
                   </p>
                 </div>
                 <span className="text-meta whitespace-nowrap">
-                  2024 – Present
+                  2024 - Present
                 </span>
               </div>
               <p className="text-body-sm">
@@ -430,22 +444,22 @@ export default function App() {
           <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-12 lg:gap-24">
             <div className="flex flex-col gap-6">
               <div>
-                <span className="block text-xs uppercase tracking-widest text-slate-500 mb-1">
+                <span className="block text-xs uppercase tracking-widest text-slate-500 light:text-zinc-500 mb-1">
                   Location
                 </span>
-                <span className="text-slate-300 flex items-center gap-2">
-                  <MapPin size={16} className="text-slate-500" /> Cebu,
+                <span className="text-slate-300 light:text-zinc-700 flex items-center gap-2">
+                  <MapPin size={16} className="text-slate-500 light:text-zinc-400" /> Cebu,
                   Philippines
                 </span>
               </div>
               <div>
-                <span className="block text-xs uppercase tracking-widest text-slate-500 mb-1">
+                <span className="block text-xs uppercase tracking-widest text-slate-500 light:text-zinc-500 mb-1">
                   Education
                 </span>
-                <span className="text-slate-300 flex items-start gap-2">
+                <span className="text-slate-300 light:text-zinc-700 flex items-start gap-2">
                   <EnvelopeSimple
                     size={16}
-                    className="text-slate-500 mt-1 shrink-0"
+                    className="text-slate-500 light:text-zinc-400 mt-1 shrink-0"
                   />
                   BS Information Technology, <br /> University of Cebu
                 </span>
@@ -456,11 +470,11 @@ export default function App() {
       </main>
 
       {/* ═══════════ FOOTER ═══════════ */}
-      <footer className="border-t border-border-subtle py-8">
+      <footer className="border-t border-border-subtle light:border-zinc-200 py-8">
         <div className="max-w-5xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-white rounded-sm" />
-            <span className="text-sm font-medium text-slate-300">
+            <div className="w-3 h-3 bg-white light:bg-sky-600 rounded-sm" />
+            <span className="text-sm font-medium text-slate-300 light:text-zinc-700">
               Anton James Genabio
             </span>
           </div>
@@ -469,7 +483,7 @@ export default function App() {
               href="https://github.com/Javabutdif"
               target="_blank"
               rel="noreferrer"
-              className="text-slate-500 hover:text-white transition-colors"
+              className="text-slate-500 light:text-zinc-500 hover:text-white light:hover:text-zinc-900 transition-colors"
               aria-label="GitHub"
             >
               <GithubLogo size={18} />
@@ -478,7 +492,7 @@ export default function App() {
               href="https://www.linkedin.com/in/jgenabs/"
               target="_blank"
               rel="noreferrer"
-              className="text-slate-500 hover:text-white transition-colors"
+              className="text-slate-500 light:text-zinc-500 hover:text-white light:hover:text-zinc-900 transition-colors"
               aria-label="LinkedIn"
             >
               <LinkedinLogo size={18} />

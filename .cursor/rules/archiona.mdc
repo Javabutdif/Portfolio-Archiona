@@ -25,6 +25,8 @@ Follow this workflow before writing or modifying any code:
 9. If the user request needs a file not in the plan, stop and ask — do not silently expand scope.
 10. If the skill is silent on something and there is no existing project file to follow, stop and ask.
 11. **Never read or log the contents of `.env`, `.env.*`, `.pem`, `.key`, `~/.ssh/*`, or any secret-bearing file.** Reference paths only, never values.
+12. **Work inside this project repo only.** Every Archiona artifact (plans under `.archiona/plans/`, skills under `.archiona/skills/`, agent instruction files) is written under the repo root — never to your home dir, global config, a sibling project, or a notes vault. Plan Files are repo-relative paths: no absolute paths, no `~`, no `../` that escapes the repo.
+13. Run Archiona commands from any directory in the repo. The CLI anchors to the repo root (it walks up to the nearest `.archiona/`), so all writes land in this project.
 
 If the workflow and the user request conflict, the workflow wins. Edit the workflow or the skill (not the plan) when the rules need to change.
 

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#05070b"/>
+  <circle cx="150" cy="100" r="300" fill="#38bdf8" opacity="0.08"/>
+  <rect x="80" y="220" width="64" height="64" rx="8" fill="#ffffff"/>
+  <text x="80" y="360" font-family="'Plus Jakarta Sans', sans-serif" font-size="52" font-weight="700" fill="#ffffff">Anton James Genabio</text>
+  <text x="80" y="420" font-family="'Inter', sans-serif" font-size="30" font-weight="500" fill="#94a3b8">Full-Stack Developer</text>
+  <text x="80" y="500" font-family="'JetBrains Mono', monospace" font-size="18" fill="#93c5fd">React · Node.js · Next.js · TypeScript</text>
+</svg>
