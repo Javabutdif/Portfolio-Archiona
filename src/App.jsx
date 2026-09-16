@@ -219,7 +219,7 @@ export default function App() {
               className="heading-display mb-6"
             >
               Anton James Genabio. <br />
-              <span className="text-slate-500 light:text-zinc-500">Full-Stack Developer.</span>
+              <span className="text-slate-500 light:text-zinc-500">Software Developer.</span>
             </motion.h1>
 
             <motion.p
@@ -261,7 +261,7 @@ export default function App() {
             <h2 className="heading-section">Projects</h2>
             <p className="text-body">
               Web platforms, internal tools, and AI experiments. Most of this
-              work is for student orgs or personal projects.
+              work is for university orgs or personal projects.
             </p>
           </div>
 
@@ -363,7 +363,7 @@ export default function App() {
                   </p>
                 </div>
                 <span className="text-meta whitespace-nowrap">
-                  2024 - Present
+                  2024 - 2025
                 </span>
               </div>
               <p className="text-body-sm">
