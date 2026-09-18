@@ -219,7 +219,7 @@ export default function App() {
               className="heading-display mb-6"
             >
               Anton James Genabio. <br />
-              <span className="text-slate-500 light:text-zinc-500">Software Developer.</span>
+              <span className="text-slate-500 light:text-zinc-500">Software Engineer.</span>
             </motion.h1>
 
             <motion.p
