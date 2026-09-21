@@ -22,15 +22,14 @@ export const projects = [
   {
     id: 1,
     title: "PSITS",
-    subtitle: "University Platform for Student Organization",
+    subtitle: "University Platform",
     description:
-      "A comprehensive web platform for the Philippine Society of Information Technology Students, a student organization with over three thousand members at the University of Cebu. Replaced Google Forms and manual spreadsheets with merchandise ordering, event management and attendance tracking, membership lifecycle management, certificate generation, recruitment tracking, raffle systems, and discount code management. Make.com integrations automate workflows between the platform and the org's external tools. Built on an Express and TypeScript backend with MongoDB, serving a React 19 TypeScript frontend alongside a legacy React 18 JavaScript frontend being migrated. Features JWT authentication with token rotation, AWS S3 and Cloudflare R2 object storage, and Puppeteer-powered PDF certificate generation.",
+      "A comprehensive web platform for the Philippine Society of Information Technology Students, a student organization with over three thousand members at the University of Cebu. Replaced Google Forms and manual spreadsheets with merchandise ordering, event management and attendance tracking, membership lifecycle management, certificate generation, recruitment tracking, raffle systems, and discount code management. Make.com integrations automate workflows between the platform and the org's external tools. Built on an Express and TypeScript backend with MongoDB, serving a React 19 TypeScript frontend alongside a legacy React 18 JavaScript frontend being migrated. Features JWT authentication with token rotation, Cloudflare R2 object storage, and Puppeteer-powered PDF certificate generation.",
     tech: [
       "React 19",
       "TypeScript",
       "Express",
       "MongoDB",
-      "AWS S3",
       "Cloudflare R2",
       "Make.com",
     ],
@@ -60,7 +59,7 @@ export const projects = [
       "A CLI tool and workflow system that enforces a pre-coding gate for development. Before writing any code, it produces a reviewable plan including files to touch, test strategy, and rollback path, with coding beginning only after human approval. Scaffolds an archiona directory into any project, decomposes goals into persona-gated sub-tasks, validates plan completeness with the validate command, seeds project skills so agents follow your conventions instead of their defaults, and auto-injects the active persona skill into each agent instruction file via the hook command. Integrates with opencode, Cursor, Copilot, Cline, Codex CLI, Continue, and Aider.",
     tech: ["Node.js", "TypeScript", "npm CLI", "Markdown"],
     demoLink: "#",
-    linkLabel: "View on npm",
+    linkLabel: "View Documentation",
     year: "2026",
     role: "Workflow / Founder",
     category: "featured",
@@ -68,9 +67,9 @@ export const projects = [
   {
     id: 8,
     title: "Kinora AI",
-    subtitle: "Personal video and image studio",
+    subtitle: "Personal studio",
     description:
-      "A self-hosted creative studio for video and image generation. Write a prompt, press record, and receive cinematic output including video up to sixty seconds at 4K resolution and images from 1K to 4K. Features include prompt refinement, seed locking for consistency, batch generation, image-to-image through reference images, wallpaper mode with anime auto-modifiers, a mood board with A-B comparison slider, generation history, and prompt templates, all persisted to localStorage. Built with Next.js 16, React 19, Tailwind version 4, and the Agnes API, wrapped in a warm editorial photo lab design language.",
+      "A self-hosted creative studio for video image, email, and comic generation integrated with Agnes AI. Write a prompt, press record, and receive cinematic output including video depend on Agnes AI API duration and resolution. Features include prompt refinement, seed locking for consistency, batch generation, image-to-image through reference images, wallpaper mode with anime auto-modifiers, a mood board with A-B comparison slider, generation history, and prompt templates, all persisted to localStorage. Built with Next.js 16, React 19, Tailwind version 4, and the Agnes API, wrapped in a warm editorial photo lab design language.",
     tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind v4"],
     demoLink: "",
     linkLabel: "Private project",
