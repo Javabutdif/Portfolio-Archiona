@@ -21,10 +21,10 @@ export const projects = [
   },
   {
     id: 1,
-    title: "PSITS Website",
-    subtitle: "Student Organization Management & E-Commerce Platform",
+    title: "PSITS",
+    subtitle: "University Platform for Student Organization",
     description:
-      "A comprehensive web platform for the Philippine Society of Information Technology Students, a student organization with over three thousand members at the University of Cebu. Replaced Google Forms and manual spreadsheets with merchandise ordering, event management and attendance tracking, membership lifecycle management, certificate generation, recruitment tracking, raffle systems, and discount code management. Built on an Express and TypeScript backend with MongoDB, serving a React 19 TypeScript frontend alongside a legacy React 18 JavaScript frontend being migrated. Features JWT authentication with token rotation, AWS S3 and Cloudflare R2 object storage, and Puppeteer-powered PDF certificate generation.",
+      "A comprehensive web platform for the Philippine Society of Information Technology Students, a student organization with over three thousand members at the University of Cebu. Replaced Google Forms and manual spreadsheets with merchandise ordering, event management and attendance tracking, membership lifecycle management, certificate generation, recruitment tracking, raffle systems, and discount code management. Make.com integrations automate workflows between the platform and the org's external tools. Built on an Express and TypeScript backend with MongoDB, serving a React 19 TypeScript frontend alongside a legacy React 18 JavaScript frontend being migrated. Features JWT authentication with token rotation, AWS S3 and Cloudflare R2 object storage, and Puppeteer-powered PDF certificate generation.",
     tech: [
       "React 19",
       "TypeScript",
@@ -32,6 +32,7 @@ export const projects = [
       "MongoDB",
       "AWS S3",
       "Cloudflare R2",
+      "Make.com",
     ],
     demoLink: "https://psits.org/",
     year: "2024",

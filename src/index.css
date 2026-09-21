@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
 
 @custom-variant light (@media (prefers-color-scheme: light));
 
@@ -15,9 +17,9 @@
   --color-accent: #93c5fd;
   --color-accent-strong: #38bdf8;
 
-  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-display: "Geist Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: "Geist Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", "Cascadia Mono", monospace;
 
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1);
   --ease-linear: cubic-bezier(0.25, 1, 0.5, 1);

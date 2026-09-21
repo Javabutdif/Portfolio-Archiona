@@ -20,6 +20,7 @@ import {
   Cloud,
   Stack,
   Devices,
+  FlowArrow,
 } from "@phosphor-icons/react";
 
 const skills = [
@@ -32,6 +33,7 @@ const skills = [
       { name: "Prompt & Context Design", icon: <ChatsCircle /> },
       { name: "Agentic Workflows", icon: <GitBranch /> },
       { name: "LLM App Experiences", icon: <Circuitry /> },
+      { name: "Make.com Automations", icon: <FlowArrow /> },
     ],
   },
   {

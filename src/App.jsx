@@ -15,12 +15,14 @@ import {
 import Modal from "./components/Modal.jsx";
 import ProjectCard from "./components/ProjectCard.jsx";
 import SkillsSection from "./components/SkillsSection.jsx";
+import AgentsSection from "./components/AgentsSection.jsx";
 import { projects } from "./projects.js";
 
 /* ── Static data ── */
 const navLinks = [
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "Agents", href: "#agents" },
   { label: "Roles", href: "#roles" },
   { label: "About", href: "#about" },
 ];
@@ -157,12 +159,14 @@ export default function App() {
   }, [activeProject]);
 
   useEffect(() => {
-    const sections = ["hero", "skills", "projects", "roles", "about"];
+    const sections = ["hero", "skills", "projects", "agents", "roles", "about"];
     const ratios = {};
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          ratios[entry.target.id] = entry.isIntersecting ? entry.intersectionRatio : 0;
+          ratios[entry.target.id] = entry.isIntersecting
+            ? entry.intersectionRatio
+            : 0;
         });
         let best = null;
         let bestRatio = 0;
@@ -219,7 +223,9 @@ export default function App() {
               className="heading-display mb-6"
             >
               Anton James Genabio. <br />
-              <span className="text-slate-500 light:text-zinc-500">Full-Stack Developer.</span>
+              <span className="text-slate-500 light:text-zinc-500">
+                Software Engineer.
+              </span>
             </motion.h1>
 
             <motion.p
@@ -261,7 +267,7 @@ export default function App() {
             <h2 className="heading-section">Projects</h2>
             <p className="text-body">
               Web platforms, internal tools, and AI experiments. Most of this
-              work is for student orgs or personal projects.
+              work is for university or personal projects.
             </p>
           </div>
 
@@ -335,6 +341,9 @@ export default function App() {
             </div>
           )}
         </section>
+
+        {/* ═══════════ AGENTS ═══════════ */}
+        <AgentsSection />
 
         {/* ═══════════ ROLES & COMMITMENT ═══════════ */}
         <section className="py-24 border-b border-border-subtle" id="roles">
@@ -441,29 +450,30 @@ export default function App() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-12 lg:gap-24">
-            <div className="flex flex-col gap-6">
-              <div>
-                <span className="block text-xs uppercase tracking-widest text-slate-500 light:text-zinc-500 mb-1">
-                  Location
-                </span>
-                <span className="text-slate-300 light:text-zinc-700 flex items-center gap-2">
-                  <MapPin size={16} className="text-slate-500 light:text-zinc-400" /> Cebu,
-                  Philippines
-                </span>
-              </div>
-              <div>
-                <span className="block text-xs uppercase tracking-widest text-slate-500 light:text-zinc-500 mb-1">
-                  Education
-                </span>
-                <span className="text-slate-300 light:text-zinc-700 flex items-start gap-2">
-                  <EnvelopeSimple
-                    size={16}
-                    className="text-slate-500 light:text-zinc-400 mt-1 shrink-0"
-                  />
-                  BS Information Technology, <br /> University of Cebu
-                </span>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-xl">
+            <div>
+              <span className="block text-xs uppercase tracking-widest text-slate-500 light:text-zinc-500 mb-1">
+                Location
+              </span>
+              <span className="text-slate-300 light:text-zinc-700 flex items-center gap-2">
+                <MapPin
+                  size={16}
+                  className="text-slate-500 light:text-zinc-400"
+                />{" "}
+                Cebu, Philippines
+              </span>
+            </div>
+            <div>
+              <span className="block text-xs uppercase tracking-widest text-slate-500 light:text-zinc-500 mb-1">
+                Education
+              </span>
+              <span className="text-slate-300 light:text-zinc-700 flex items-start gap-2">
+                <EnvelopeSimple
+                  size={16}
+                  className="text-slate-500 light:text-zinc-400 mt-1 shrink-0"
+                />
+                BS Information Technology, <br /> University of Cebu
+              </span>
             </div>
           </div>
         </section>
