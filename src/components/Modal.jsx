@@ -111,6 +111,8 @@ export default function Modal({ project, onClose }) {
                         ? 'Private project'
                         : project.linkLabel === 'View on npm'
                         ? 'Open source - view on npm'
+                        : project.linkLabel === 'View Documentation'
+                        ? 'View documentation'
                         : 'Internal tool'}
                     </span>
                   )}

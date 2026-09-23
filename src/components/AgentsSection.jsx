@@ -7,10 +7,6 @@ const agentGroups = [
     group: "Terminal agents",
     items: [
       {
-        name: "Codex CLI",
-        role: "Delegating well-scoped tasks: scaffolding, refactors, test fixes",
-      },
-      {
         name: "Claude Code",
         role: "Multi-file features and codebase-level work in the terminal",
       },
@@ -34,6 +30,10 @@ const agentGroups = [
       {
         name: "Copilot",
         role: "Inline completions and chat-assisted edits",
+      },
+      {
+        name: "Codex",
+        role: "OpenAI's agent inside the IDE for multi-file, repo-aware work",
       },
     ],
   },

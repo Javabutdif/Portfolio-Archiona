@@ -54,7 +54,7 @@ export const projects = [
     linkLabel: "View Documentation",
     year: "2026",
     role: "Founder / Developer",
-    category: "featured",
+    category: "other",
   },
   {
     id: 7,
@@ -67,7 +67,7 @@ export const projects = [
     linkLabel: "View Documentation",
     year: "2026",
     role: "Workflow / Founder",
-    category: "featured",
+    category: "other",
   },
   {
     id: 8,
@@ -80,7 +80,7 @@ export const projects = [
     linkLabel: "Private project",
     year: "2026",
     role: "Fullstack Developer / Founder",
-    category: "featured",
+    category: "other",
   },
   {
     id: 2,

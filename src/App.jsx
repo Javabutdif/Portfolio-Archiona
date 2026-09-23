@@ -63,7 +63,6 @@ function Navbar({ activeSection }) {
           href="#hero"
           className="font-semibold text-white light:text-zinc-900 tracking-tight flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-white outline-none rounded-sm"
         >
-          <div className="w-4 h-4 bg-white light:bg-sky-600 rounded-sm" />
           AJG
         </a>
 
@@ -191,10 +190,10 @@ export default function App() {
 
   const featuredProjects = projects.filter((p) => p.category === "featured");
   const schoolProjects = projects.filter((p) => p.category === "school");
+  const otherProjects = projects.filter((p) => p.category === "other");
 
-  /* First two featured are primary (full cards), rest are compact */
+  /* First two featured are primary (full cards) */
   const primaryFeatured = featuredProjects.slice(0, 2);
-  const compactFeatured = featuredProjects.slice(2);
 
   return (
     <>
@@ -291,11 +290,12 @@ export default function App() {
             </div>
           )}
 
-          {/* Compact Featured Projects */}
-          {compactFeatured.length > 0 && (
+          {/* Other Work */}
+          {otherProjects.length > 0 && (
             <div className="mb-16">
+              <h3 className="heading-card text-lg mb-6">Other Work</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {compactFeatured.map((project, i) => (
+                {otherProjects.map((project, i) => (
                   <motion.div
                     key={project.id}
                     initial={reduce ? false : { opacity: 0, y: 20 }}
@@ -306,7 +306,6 @@ export default function App() {
                     <ProjectCard
                       project={project}
                       onSelect={setActiveProject}
-                      isFeatured={true}
                       isCompact={true}
                     />
                   </motion.div>
@@ -474,7 +473,6 @@ export default function App() {
       <footer className="border-t border-border-subtle light:border-zinc-200 py-8">
         <div className="max-w-5xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-white light:bg-sky-600 rounded-sm" />
             <span className="text-sm font-medium text-slate-300 light:text-zinc-700">
               Anton James Genabio
             </span>

@@ -87,8 +87,8 @@ export default function ProjectCard({ project, onSelect, isFeatured, isCompact }
           />
         </div>
 
-        {/* Status label for non-linked featured projects */}
-        {isFeatured && statusLabel && (
+        {/* Status label for projects without a live link */}
+        {statusLabel && (
           <div className="mt-3">
             <span className="text-slate-400 light:text-zinc-500 text-xs font-medium">{statusLabel}</span>
           </div>
