@@ -1,3 +1,6 @@
+import lessoraThumb from "./assets/lessora.png";
+import psitsThumb from "./assets/psits.png";
+
 export const projects = [
   {
     id: 5,
@@ -15,6 +18,7 @@ export const projects = [
     ],
     demoLink: "https://lessora.ajgenabio.me/",
     linkLabel: "View Live Site",
+    thumbnail: lessoraThumb,
     year: "2026",
     role: "Solo Founder / Developer",
     category: "featured",
@@ -34,6 +38,7 @@ export const projects = [
       "Make.com",
     ],
     demoLink: "https://psits.org/",
+    thumbnail: psitsThumb,
     year: "2024",
     role: "Lead Developer",
     category: "featured",
@@ -69,7 +74,7 @@ export const projects = [
     title: "Kinora AI",
     subtitle: "Personal studio",
     description:
-      "A self-hosted creative studio for video image, email, and comic generation integrated with Agnes AI. Write a prompt, press record, and receive cinematic output including video depend on Agnes AI API duration and resolution. Features include prompt refinement, seed locking for consistency, batch generation, image-to-image through reference images, wallpaper mode with anime auto-modifiers, a mood board with A-B comparison slider, generation history, and prompt templates, all persisted to localStorage. Built with Next.js 16, React 19, Tailwind version 4, and the Agnes API, wrapped in a warm editorial photo lab design language.",
+      "A self-hosted creative studio for video, image, email, and comic generation integrated with Agnes AI. Write a prompt, press record, and receive cinematic output; video length depends on the Agnes AI API's duration and resolution settings. Features include prompt refinement, seed locking for consistency, batch generation, image-to-image through reference images, wallpaper mode with anime auto-modifiers, a mood board with A-B comparison slider, generation history, and prompt templates, all persisted to localStorage. Built with Next.js 16, React 19, Tailwind version 4, and the Agnes API, wrapped in a warm editorial photo lab design language.",
     tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind v4"],
     demoLink: "",
     linkLabel: "Private project",

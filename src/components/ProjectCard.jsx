@@ -40,6 +40,16 @@ export default function ProjectCard({ project, onSelect, isFeatured, isCompact }
           {project.role && <span>{project.role}</span>}
         </div>
 
+        {/* Optional thumbnail (placeholder until real screenshot exists) */}
+        {project.thumbnail && !isCompact && (
+          <img
+            src={project.thumbnail}
+            alt={`${project.title} screenshot`}
+            loading="lazy"
+            className="w-full aspect-[16/9] object-cover rounded-lg mb-4"
+          />
+        )}
+
         {/* Body */}
         <div className="flex-grow mb-6 min-h-0">
           <h3 className={`heading-card mb-2 transition-colors ${isCompact ? 'text-lg' : ''}`}>

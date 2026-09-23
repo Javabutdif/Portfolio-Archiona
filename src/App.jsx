@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -208,11 +206,11 @@ export default function App() {
 
       <main
         id="main-content"
-        className="max-w-5xl mx-auto px-6 md:px-12 pt-32 pb-24"
+        className="max-w-5xl mx-auto px-6 md:px-12 pt-20 md:pt-24 pb-24"
       >
         {/* ═══════════ HERO ═══════════ */}
         <header
-          className="pt-10 pb-16 md:pt-12 md:pb-20 border-b border-border-subtle"
+          className="pt-6 md:pt-8 pb-16 md:pb-20 border-b border-border-subtle"
           id="hero"
         >
           <div className="max-w-3xl">
@@ -223,7 +221,9 @@ export default function App() {
               className="heading-display mb-6"
             >
               Anton James Genabio. <br />
-              <span className="text-slate-500 light:text-zinc-500">Software Engineer.</span>
+              <span className="text-slate-500 light:text-zinc-500">
+                Software Engineer.
+              </span>
             </motion.h1>
 
             <motion.p
@@ -233,8 +233,7 @@ export default function App() {
               className="text-body text-lg md:text-xl mb-10"
             >
               I build web apps and internal tools for organizations and small
-              teams. I add AI where it actually helps, not just because it is
-              trendy.
+              teams, adding AI where it actually helps.
             </motion.p>
 
             <motion.div
@@ -359,80 +358,74 @@ export default function App() {
               whileInView={reduce ? false : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5 }}
-              className="structured-container p-6 md:p-8"
+              className="flex flex-col gap-8"
             >
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
-                <div>
-                  <h3 className="heading-card text-lg">Lead Developer</h3>
-                  <p className="text-body-sm mt-1">
-                    PSITS (Philippine Society of Information Technology
-                    Students)
+              <div className="divide-y divide-border-subtle light:divide-zinc-200">
+                <div className="py-6 first:pt-0 last:pb-0">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+                    <div>
+                      <h3 className="heading-card text-lg">Lead Developer</h3>
+                      <p className="text-body-sm mt-1">
+                        PSITS (Philippine Society of Information Technology
+                        Students)
+                      </p>
+                    </div>
+                    <span className="text-meta whitespace-nowrap">
+                      2024 - 2025
+                    </span>
+                  </div>
+                  <p className="text-body-sm">
+                    Built the PSITS website from scratch and served as Lead
+                    Developer. The platform was upgraded from Google Forms and
+                    manual spreadsheets to a full web system handling merchandise,
+                    events, membership lifecycle, certificate generation, and
+                    recruitment. This is the site's third generation. The
+                    platform continues to serve over three thousand members for
+                    operations and events.
                   </p>
                 </div>
-                <span className="text-meta whitespace-nowrap">
-                  2024 - 2025
-                </span>
-              </div>
-              <p className="text-body-sm">
-                Built the PSITS website from scratch and served as Lead
-                Developer. The platform was upgraded from Google Forms and
-                manual spreadsheets to a full web system handling merchandise,
-                events, membership lifecycle, certificate generation, and
-                recruitment. This marks the site third generation. The platform
-                continues to serve over three thousand members for operations
-                and events.
-              </p>
-            </motion.div>
 
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 20 }}
-              whileInView={reduce ? false : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="structured-container p-6 md:p-8"
-            >
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
-                <div>
-                  <h3 className="heading-card text-lg">
-                    Solo Founder / Developer
-                  </h3>
-                  <p className="text-body-sm mt-1">Lessora AI</p>
+                <div className="py-6">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+                    <div>
+                      <h3 className="heading-card text-lg">
+                        Solo Founder / Developer
+                      </h3>
+                      <p className="text-body-sm mt-1">Lessora AI</p>
+                    </div>
+                    <span className="text-meta whitespace-nowrap">2026</span>
+                  </div>
+                  <p className="text-body-sm">
+                    A lesson planning platform I built end to end, from design
+                    and frontend to backend and deployment. Transforms simple
+                    inputs like topic and grade level into complete
+                    curriculum-aligned plans. Deployed and in use, with ongoing
+                    feature additions including refined export options and
+                    expanded scheduling tools.
+                  </p>
                 </div>
-                <span className="text-meta whitespace-nowrap">2026</span>
-              </div>
-              <p className="text-body-sm">
-                A lesson planning platform I built end to end, from design and
-                frontend to backend and deployment. Transforms simple inputs
-                like topic and grade level into complete curriculum-aligned
-                plans. Deployed and in use, with ongoing feature additions
-                including refined export options and expanded scheduling tools.
-              </p>
-            </motion.div>
 
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 20 }}
-              whileInView={reduce ? false : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="structured-container p-6 md:p-8"
-            >
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
-                <div>
-                  <h3 className="heading-card text-lg">
-                    AI Engineer / Developer
-                  </h3>
-                  <p className="text-body-sm mt-1">Noetix</p>
+                <div className="py-6">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+                    <div>
+                      <h3 className="heading-card text-lg">
+                        AI Engineer / Developer
+                      </h3>
+                      <p className="text-body-sm mt-1">Noetix</p>
+                    </div>
+                    <span className="text-meta whitespace-nowrap">2026</span>
+                  </div>
+                  <p className="text-body-sm">
+                    A persona-aware orchestration service that transforms data
+                    payloads into structured natural language responses with
+                    traceable guardrail matches. Features sixteen personas with
+                    inheritance chains, session state management, dynamic prompt
+                    construction, and a tool-selection loop for multi-step task
+                    coordination. Built on pure Node.js HTTP with no web
+                    framework.
+                  </p>
                 </div>
-                <span className="text-meta whitespace-nowrap">2026</span>
               </div>
-              <p className="text-body-sm">
-                A persona-aware orchestration service that transforms data
-                payloads into structured natural language responses with
-                traceable guardrail matches. Features sixteen personas with
-                inheritance chains, session state management, dynamic prompt
-                construction, and a tool-selection loop for multi-step task
-                coordination. Built on pure Node.js HTTP with no web framework.
-              </p>
             </motion.div>
           </div>
         </section>
