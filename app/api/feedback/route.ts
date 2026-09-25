@@ -45,5 +45,22 @@ export async function POST(req: Request) {
   recentSubmits.set(ip, now);
 
   const record = await createFeedback(parsed.data.name, parsed.data.body);
+
+  const webhook = process.env.MAKE_WEBHOOK_URL;
+  if (webhook) {
+    fetch(webhook, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event: 'feedback.created',
+        display_name: record.display_name,
+        name_hash: record.name_hash,
+        body: parsed.data.body,
+        created_at: record.created_at,
+        source: 'portfolio-form',
+      }),
+    }).catch(() => {});
+  }
+
   return NextResponse.json({ data: record }, { status: 201 });
 }
