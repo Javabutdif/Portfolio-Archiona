@@ -2,10 +2,20 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight } from '@phosphor-icons/react';
+import type { Project } from '@/app/_lib/projects';
 
-export default function ProjectCard({ project, onSelect, isFeatured, isCompact }) {
+interface Props {
+  project: Project;
+  onSelect: (p: Project) => void;
+  isFeatured?: boolean;
+  isCompact?: boolean;
+}
+
+export function ProjectCard({ project, onSelect, isFeatured, isCompact }: Props) {
   const reduce = useReducedMotion();
-  const techList = Array.isArray(project.tech) ? project.tech : project.tech.split(', ');
+  const techList = Array.isArray(project.tech)
+    ? project.tech
+    : [];
   const hasLiveLink = project.demoLink && project.demoLink !== '#';
 
   const statusLabel = !hasLiveLink
@@ -22,10 +32,12 @@ export default function ProjectCard({ project, onSelect, isFeatured, isCompact }
     <motion.div
       layoutId={reduce ? undefined : `project-container-${project.id}`}
       className={`group structured-container transition-all ${
-        isCompact ? 'p-5 min-h-[200px]' : 'p-6 md:p-8 min-h-[320px]'
+        isCompact
+          ? 'p-5 min-h-[200px]'
+          : 'p-6 md:p-8 min-h-[320px]'
       }`}
-      whileHover={reduce ? false : { y: -2 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      whileHover={reduce ? undefined : { y: -2 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
     >
       <button
         type="button"
@@ -34,13 +46,11 @@ export default function ProjectCard({ project, onSelect, isFeatured, isCompact }
         aria-label={`${project.title}, ${project.role ? project.role + ', ' : ''}open project details`}
         className="w-full h-full flex flex-col text-left cursor-pointer focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-inset outline-none"
       >
-        {/* Header metadata */}
-          <div className="flex justify-between items-center mb-4 text-meta light:text-zinc-500">
+        <div className="flex justify-between items-center mb-4 text-meta light:text-zinc-500">
           {project.year && <span>{project.year}</span>}
           {project.role && <span>{project.role}</span>}
         </div>
 
-        {/* Optional thumbnail (placeholder until real screenshot exists) */}
         {project.thumbnail && !isCompact && (
           <img
             src={project.thumbnail}
@@ -50,30 +60,46 @@ export default function ProjectCard({ project, onSelect, isFeatured, isCompact }
           />
         )}
 
-        {/* Body */}
         <div className="flex-grow mb-6 min-h-0">
-          <h3 className={`heading-card mb-2 transition-colors ${isCompact ? 'text-lg' : ''}`}>
+          <h3
+            className={`heading-card mb-2 transition-colors ${
+              isCompact ? 'text-lg' : ''
+            }`}
+          >
             {project.title}
           </h3>
           {project.subtitle && (
-            <p className={`text-body-sm mb-3 line-clamp-1 ${isCompact ? 'text-xs' : ''}`}>
+            <p
+              className={`text-body-sm mb-3 line-clamp-1 ${
+                isCompact ? 'text-xs' : ''
+              }`}
+            >
               {project.subtitle}
             </p>
           )}
-
-          <p className={`text-body-sm line-clamp-2 ${isCompact ? 'text-xs text-slate-500' : ''}`}>
+          <p
+            className={`text-body-sm line-clamp-2 ${
+              isCompact ? 'text-xs text-slate-500' : ''
+            }`}
+          >
             {project.description}
           </p>
         </div>
 
-        {/* Footer tech stack */}
         <div className="flex items-center justify-between mt-auto pt-4 border-t border-border-subtle light:border-zinc-200">
           <div className="flex flex-wrap gap-1.5 text-meta light:text-zinc-500">
-            {techList.slice(0, isCompact ? 2 : 3).map((t) => (
-              <span key={t} className={`text-slate-500 light:text-zinc-500 ${isCompact ? 'text-xs' : ''}`}>
-                {t}
-              </span>
-            ))}
+            {techList
+              .slice(0, isCompact ? 2 : 3)
+              .map((t) => (
+                <span
+                  key={t}
+                  className={`text-slate-500 light:text-zinc-500 ${
+                    isCompact ? 'text-xs' : ''
+                  }`}
+                >
+                  {t}
+                </span>
+              ))}
             {techList.length > (isCompact ? 2 : 3) && (
               <span className="text-slate-400 light:text-zinc-600">
                 +{techList.length - (isCompact ? 2 : 3)}
@@ -87,15 +113,15 @@ export default function ProjectCard({ project, onSelect, isFeatured, isCompact }
           />
         </div>
 
-        {/* Status label for projects without a live link */}
         {statusLabel && (
           <div className="mt-3">
-            <span className="text-slate-400 light:text-zinc-500 text-xs font-medium">{statusLabel}</span>
+            <span className="text-slate-400 light:text-zinc-500 text-xs font-medium">
+              {statusLabel}
+            </span>
           </div>
         )}
       </button>
 
-      {/* Live demo link for featured projects - outside button, valid HTML */}
       {isFeatured && hasLiveLink && (
         <div className="mt-3 -mb-2">
           <a

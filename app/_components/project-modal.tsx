@@ -3,29 +3,37 @@
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { X, ArrowUpRight } from '@phosphor-icons/react';
+import type { Project } from '@/app/_lib/projects';
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
 
-export default function Modal({ project, onClose }) {
+interface Props {
+  project: Project | null;
+  onClose: () => void;
+}
+
+export function ProjectModal({ project, onClose }: Props) {
   const reduce = useReducedMotion();
-  const panelRef = useRef(null);
-  const restoreRef = useRef(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const restoreRef = useRef<Element | null>(null);
 
   useEffect(() => {
     if (!project) return;
     restoreRef.current = document.activeElement;
     const panel = panelRef.current;
-    const focusables = panel ? panel.querySelectorAll(FOCUSABLE) : [];
+    const focusables = panel
+      ? panel.querySelectorAll<HTMLElement>(FOCUSABLE)
+      : [];
     if (focusables.length) focusables[0].focus();
 
-    function handleKeyDown(e) {
+    function handleKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') {
         onClose();
         return;
       }
       if (e.key !== 'Tab' || !panel) return;
-      const items = panel.querySelectorAll(FOCUSABLE);
+      const items = panel.querySelectorAll<HTMLElement>(FOCUSABLE);
       if (items.length === 0) return;
       const first = items[0];
       const last = items[items.length - 1];
@@ -41,13 +49,16 @@ export default function Modal({ project, onClose }) {
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-      if (restoreRef.current) restoreRef.current.focus();
+      if (restoreRef.current instanceof HTMLElement)
+        restoreRef.current.focus();
     };
   }, [project, onClose]);
 
   if (!project) return null;
 
-  const techList = Array.isArray(project.tech) ? project.tech : project.tech.split(', ');
+  const techList = Array.isArray(project.tech)
+    ? project.tech
+    : [];
 
   return (
     <AnimatePresence>
@@ -87,7 +98,9 @@ export default function Modal({ project, onClose }) {
             </h3>
 
             {project.subtitle && (
-              <p className="text-body text-sky-300/90 mb-6 sm:mb-8">{project.subtitle}</p>
+              <p className="text-body text-sky-300/90 mb-6 sm:mb-8">
+                {project.subtitle}
+              </p>
             )}
 
             <div className="flex flex-col lg:flex-row gap-8 lg:gap-10">

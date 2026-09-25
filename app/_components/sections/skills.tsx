@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from 'framer-motion';
 import {
   Sparkle,
   Lightning,
@@ -21,51 +21,51 @@ import {
   Stack,
   Devices,
   FlowArrow,
-} from "@phosphor-icons/react";
+} from '@phosphor-icons/react';
 
 const skills = [
   {
-    category: "AI & Automation",
+    category: 'AI & Automation',
     items: [
-      { name: "AI Product Development", icon: <Sparkle /> },
-      { name: "Workflow Automation", icon: <Lightning /> },
-      { name: "OpenAI API Integration", icon: <Robot /> },
-      { name: "Prompt & Context Design", icon: <ChatsCircle /> },
-      { name: "Agentic Workflows", icon: <GitBranch /> },
-      { name: "LLM App Experiences", icon: <Circuitry /> },
-      { name: "Make.com Automations", icon: <FlowArrow /> },
+      { name: 'AI Product Development', icon: <Sparkle /> },
+      { name: 'Workflow Automation', icon: <Lightning /> },
+      { name: 'OpenAI API Integration', icon: <Robot /> },
+      { name: 'Prompt & Context Design', icon: <ChatsCircle /> },
+      { name: 'Agentic Workflows', icon: <GitBranch /> },
+      { name: 'LLM App Experiences', icon: <Circuitry /> },
+      { name: 'Make.com Automations', icon: <FlowArrow /> },
     ],
   },
   {
-    category: "Frontend",
+    category: 'Frontend',
     items: [
-      { name: "React & TypeScript", icon: <Atom /> },
-      { name: "Responsive UI Systems", icon: <Browser /> },
-      { name: "Tailwind & Design Systems", icon: <Monitor /> },
-      { name: "UI Implementation", icon: <FileCode /> },
+      { name: 'React & TypeScript', icon: <Atom /> },
+      { name: 'Responsive UI Systems', icon: <Browser /> },
+      { name: 'Tailwind & Design Systems', icon: <Monitor /> },
+      { name: 'UI Implementation', icon: <FileCode /> },
     ],
   },
   {
-    category: "Backend",
+    category: 'Backend',
     items: [
-      { name: "Node.js & Express", icon: <HardDrives /> },
-      { name: "Java & C# / .NET", icon: <Code /> },
-      { name: "RESTful APIs", icon: <PlugsConnected /> },
-      { name: "MongoDB & MySQL", icon: <Database /> },
+      { name: 'Node.js & Express', icon: <HardDrives /> },
+      { name: 'Java & C# / .NET', icon: <Code /> },
+      { name: 'RESTful APIs', icon: <PlugsConnected /> },
+      { name: 'MongoDB & MySQL', icon: <Database /> },
     ],
   },
   {
-    category: "Delivery & Ops",
+    category: 'Delivery & Ops',
     items: [
-      { name: "Full-Stack Delivery", icon: <Wrench /> },
-      { name: "Deployment & Hosting", icon: <Cloud /> },
-      { name: "Git & Version Control", icon: <Stack /> },
-      { name: "System Integration", icon: <Devices /> },
+      { name: 'Full-Stack Delivery', icon: <Wrench /> },
+      { name: 'Deployment & Hosting', icon: <Cloud /> },
+      { name: 'Git & Version Control', icon: <Stack /> },
+      { name: 'System Integration', icon: <Devices /> },
     ],
   },
 ];
 
-export default function SkillsSection() {
+export function SkillsSection() {
   const reduce = useReducedMotion();
   return (
     <section className="py-24 border-b border-border-subtle" id="skills">
@@ -81,9 +81,9 @@ export default function SkillsSection() {
         {skills.map((group, groupIdx) => (
           <motion.div
             key={group.category}
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            whileInView={reduce ? false : { opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            initial={reduce ? undefined : { opacity: 0, y: 20 }}
+            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5, delay: groupIdx * 0.1 }}
             className="structured-container p-6 flex flex-col"
           >

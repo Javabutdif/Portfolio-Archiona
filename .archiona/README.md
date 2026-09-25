@@ -26,8 +26,19 @@ archiona plan --slug <s> --title "<t>"   # scaffold a plan
 archiona validate                         # check plan
 archiona hook [--only <a,b,...>]          # wire coding agents
 archiona doctor                           # check agent coverage
+archiona update [--dry-run]               # refresh seeded files after upgrading
 ```
 
-## Version
+## Containment
 
-Workflow version: 4.0.0
+Archiona works only inside this project. Every Archiona artifact (plans,
+skills, agent instruction files) is written under this repo root — never to
+a home dir, global config, or another project. Run commands from any
+subdirectory: the CLI anchors to this repo by finding `.archiona/`.
+
+## Upgrading
+
+When you upgrade the archiona package, run `archiona update` to refresh
+`.archiona/workflow.md`, `workflow.config.json`, `README.md`, and
+`skills/` from the installed templates. Your plans, archive, and docs are
+never touched. Then run `archiona hook` to regenerate agent instruction files.
