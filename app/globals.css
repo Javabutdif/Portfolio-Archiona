@@ -1,196 +1,127 @@
 @import "tailwindcss";
-@import "@fontsource-variable/geist";
-@import "@fontsource-variable/geist-mono";
 
-@custom-variant light (@media (prefers-color-scheme: light));
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
 /*
- * Linear / Vercel Minimalist Archetype Base Variables
+ * Dark only: charcoal + ink + periwinkle-cobalt. The `light:` variant above is
+ * kept so admin classes compile, but nothing sets data-theme="light".
+ * One radius (6px) for buttons, images, inputs and the modal.
  */
 @theme {
-  --color-bg-base: #05070b;
-  --color-bg-deep: #0c1017;
-  --color-surface: #101622;
-  --color-surface-hover: #171f2d;
-  --color-border-subtle: rgba(255, 255, 255, 0.08);
-  --color-border-strong: rgba(255, 255, 255, 0.16);
-  --color-accent: #93c5fd;
-  --color-accent-strong: #38bdf8;
+  --color-paper: #121417;
+  --color-raised: #1a1d22;
+  --color-ink: #e6e8ec;
+  --color-ink-soft: #c4c9d2;
+  --color-muted: #9aa1ad;
+  --color-rule: #2a2e35;
+  --color-accent: #8fa5ff;
+  --color-accent-hover: #a9baff;
+  --color-on-accent: #121417;
+  --color-danger: #ff9b8f;
 
-  --font-display: "Geist Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-sans: "Geist Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", "Cascadia Mono", monospace;
+  /* Legacy names still used by app/admin */
+  --color-bg-base: #121417;
+  --color-bg-deep: #0d0f12;
+  --color-surface: #1a1d22;
+  --color-surface-hover: #20242a;
+  --color-border-subtle: #2a2e35;
+  --color-border-strong: #3a3f48;
+  --color-accent-strong: #8fa5ff;
 
-  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1);
-  --ease-linear: cubic-bezier(0.25, 1, 0.5, 1);
-}
+  --font-display: var(--font-archivo), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-plex-sans), system-ui, "Segoe UI", sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "Cascadia Mono", monospace;
 
-html {
-  scroll-behavior: smooth;
+  --radius-ui: 6px;
 }
 
 @layer base {
-  body {
-    @apply bg-bg-base text-slate-300 antialiased font-sans selection:bg-sky-400/25 selection:text-white;
-    background-image: radial-gradient(circle at top left, rgba(56, 189, 248, 0.10), transparent 28%),
-      linear-gradient(180deg, rgba(255,255,255,0.02), transparent 40%);
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
-  ::-webkit-scrollbar {
-    @apply w-1.5;
+  body {
+    @apply bg-paper text-ink-soft font-sans antialiased;
   }
-  ::-webkit-scrollbar-track {
-    @apply bg-bg-base;
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 25%, transparent);
+    color: var(--color-ink);
   }
-  ::-webkit-scrollbar-thumb {
-    @apply bg-slate-800 rounded-full hover:bg-slate-700 transition-colors;
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
-/* Typography Hierarchy - High Contrast, Legible, Structured */
+/* Type */
 .heading-display {
-  @apply font-display text-5xl md:text-7xl font-bold tracking-tight leading-[1.05] text-white;
+  @apply font-display font-extrabold text-ink text-[clamp(1.625rem,7.4vw,2.75rem)] leading-[1.08] tracking-[-0.02em] sm:text-5xl lg:text-[clamp(2.75rem,4.7vw,3.5rem)];
+  font-stretch: 100%;
+  text-wrap: balance;
+}
+@media (min-width: 40rem) {
+  .heading-display {
+    font-stretch: 118%;
+  }
 }
 .heading-section {
-  @apply font-display text-3xl md:text-4xl font-semibold tracking-tight text-white mb-6;
+  @apply font-display font-bold text-ink text-2xl md:text-3xl leading-tight tracking-[-0.01em] mb-4;
+  font-stretch: 112%;
+  text-wrap: balance;
 }
 .heading-card {
-  @apply font-display text-xl md:text-2xl font-semibold tracking-tight text-white;
+  @apply font-display font-bold text-ink text-xl md:text-2xl leading-snug;
+  font-stretch: 108%;
 }
 .text-eyebrow {
-  @apply font-mono text-[11px] md:text-xs font-medium tracking-[0.15em] uppercase text-sky-400/90 mb-4 block;
+  @apply font-mono text-xs text-muted mb-2 block;
 }
 .text-body {
-  @apply font-sans text-base md:text-lg text-slate-400 leading-relaxed max-w-[65ch];
+  @apply font-sans text-base md:text-[1.0625rem] text-ink-soft leading-relaxed max-w-[65ch];
+  text-wrap: pretty;
 }
 .text-body-sm {
-  @apply font-sans text-sm md:text-base text-slate-500 leading-relaxed;
+  @apply font-sans text-sm md:text-[0.9375rem] text-muted leading-relaxed;
+  text-wrap: pretty;
 }
 .text-meta {
-  @apply font-mono text-xs text-slate-500 tracking-wide;
+  @apply font-mono text-xs text-muted;
 }
 
-/* Structured Layout Components */
+.link {
+  @apply text-ink underline decoration-rule underline-offset-4 decoration-2 transition-colors hover:decoration-accent;
+}
+
+/* Surfaces */
 .structured-container {
-  @apply border border-border-subtle bg-surface/70 rounded-2xl overflow-hidden transition-all duration-300 hover:border-sky-400/30 hover:bg-surface-hover shadow-[0_0_0_1px_rgba(255,255,255,0.02)_inset];
+  @apply bg-raised border border-rule rounded-[var(--radius-ui)];
 }
 
-/* Interactive Pill Button */
+/* Buttons */
 .btn-primary {
-  @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-sky-400 text-slate-950 font-medium transition-all duration-200 hover:bg-sky-300 active:scale-95;
+  @apply inline-flex items-center gap-2 min-h-11 px-4 rounded-[var(--radius-ui)] bg-accent text-on-accent font-medium transition-colors duration-150 hover:bg-accent-hover active:translate-y-px;
 }
 .btn-secondary {
-  @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-transparent text-slate-300 font-medium border border-border-subtle transition-all duration-200 hover:bg-surface-hover hover:text-white hover:border-sky-400/30 active:scale-95;
+  @apply inline-flex items-center gap-2 min-h-11 px-4 rounded-[var(--radius-ui)] border border-rule text-ink font-medium transition-colors duration-150 hover:border-ink active:translate-y-px;
 }
 
-/* Skip to content link */
 .skip-link {
-  @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-sky-400 focus:text-slate-950 focus:px-4 focus:py-2 focus:rounded-sm focus:font-medium;
+  @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:bg-accent focus:text-on-accent focus:px-4 focus:py-2 focus:rounded-[var(--radius-ui)] focus:font-medium;
 }
 
-/* Grain overlay - fixed, pointer-events-none, subtle depth on dark base */
-.grain-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
-  opacity: 1;
-}
-
-/* Focus rings for non-button interactive elements */
-a:focus-visible,
-[tabindex]:focus-visible {
-  outline: 2px solid rgba(147, 197, 253, 0.8);
-  outline-offset: 2px;
-}
-
-/* Reduced motion - kill all automatic animations */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .grain-overlay {
-    display: none;
-  }
-}
-
-/* Light mode - placed last so it wins the cascade over dark base classes.
-   Respects system preference; preserves IA and layout. */
-@media (prefers-color-scheme: light) {
-  body {
-    background-color: #fafafa;
-    color: #52525b;
-    background-image: radial-gradient(circle at top left, rgba(2, 132, 199, 0.06), transparent 28%);
-  }
-
-  .heading-display,
-  .heading-section,
-  .heading-card {
-    color: #18181b;
-  }
-
-  .heading-display span {
-    color: #71717a;
-  }
-
-  .text-body,
-  .text-body-sm {
-    color: #52525b;
-  }
-
-  .text-meta {
-    color: #71717a;
-  }
-
-  .text-eyebrow {
-    color: rgba(3, 105, 161, 0.9);
-  }
-
-  .structured-container {
-    background-color: rgba(255, 255, 255, 0.85);
-    border-color: #e4e4e7;
-    box-shadow: none;
-  }
-
-  .structured-container:hover {
-    border-color: rgba(14, 165, 233, 0.4);
-  }
-
-  .btn-primary {
-    background-color: #0284c7;
-    color: #fff;
-  }
-
-  .btn-primary:hover {
-    background-color: #38bdf8;
-  }
-
-  .btn-secondary {
-    color: #3f3f46;
-    border-color: #d4d4d8;
-  }
-
-  .btn-secondary:hover {
-    background-color: #f4f4f5;
-    color: #18181b;
-    border-color: rgba(14, 165, 233, 0.4);
-  }
-
-  .grain-overlay {
-    display: none;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: #fff;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: #d4d4d8;
-  }
-
-  a:focus-visible,
-  [tabindex]:focus-visible {
-    outline-color: rgba(2, 132, 199, 0.8);
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }

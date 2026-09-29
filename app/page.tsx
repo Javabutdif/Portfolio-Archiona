@@ -1,33 +1,34 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Navbar } from '@/app/_components/navbar';
-import { Footer } from '@/app/_components/footer';
-import { SkillsSection } from '@/app/_components/sections/skills';
-import { ProjectsSection } from '@/app/_components/sections/projects';
-import { FeedbackSection } from '@/app/_components/feedback-section';
-import { AgentsSection } from '@/app/_components/sections/agents';
-import { RolesSection } from '@/app/_components/sections/roles';
-import { AboutSection } from '@/app/_components/sections/about';
-import { ProjectModal } from '@/app/_components/project-modal';
-import type { Project } from '@/app/_lib/projects';
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
+import { Navbar } from "@/app/_components/navbar";
+import { Footer } from "@/app/_components/footer";
+import { SkillsSection } from "@/app/_components/sections/skills";
+import { ProjectsSection } from "@/app/_components/sections/projects";
+import { FeedbackSection } from "@/app/_components/feedback-section";
+import { AgentsSection } from "@/app/_components/sections/agents";
+import { RolesSection } from "@/app/_components/sections/roles";
+import { AboutSection } from "@/app/_components/sections/about";
+import { ProjectModal } from "@/app/_components/project-modal";
+import type { Project } from "@/app/_lib/projects";
+
+const SECTION_IDS = ["hero", "projects", "agents", "roles", "skills", "about"];
 
 export default function Home() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
-  const [activeSection, setActiveSection] = useState('hero');
-  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+  const [activeSection, setActiveSection] = useState("hero");
   const reduce = useReducedMotion();
 
   useEffect(() => {
-    document.body.style.overflow = activeProject ? 'hidden' : '';
+    document.body.style.overflow = activeProject ? "hidden" : "";
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [activeProject]);
 
   useEffect(() => {
-    const sections = ['hero', 'skills', 'projects', 'agents', 'roles', 'about'];
     const ratios: Record<string, number> = {};
     const observer = new IntersectionObserver(
       (entries) => {
@@ -36,111 +37,134 @@ export default function Home() {
             ? entry.intersectionRatio
             : 0;
         });
-        let best = null;
+        let best: string | null = null;
         let bestRatio = 0;
-        sections.forEach((id) => {
+        SECTION_IDS.forEach((id) => {
           if ((ratios[id] || 0) > bestRatio) {
             bestRatio = ratios[id];
             best = id;
           }
         });
-        if (best && bestRatio > 0) setActiveSection(best);
+        setActiveSection(best ?? "");
       },
-      { rootMargin: '-20% 0px -40% 0px', threshold: [0, 0.25, 0.5, 0.75] }
+      { rootMargin: "-20% 0px -40% 0px", threshold: [0, 0.25, 0.5, 0.75] },
     );
 
-    sections.forEach((id) => {
+    SECTION_IDS.forEach((id) => {
       const el = document.getElementById(id);
-      if (!el) return;
-      sectionRefs.current[id] = el;
-      observer.observe(el);
+      if (el) observer.observe(el);
     });
 
     return () => observer.disconnect();
   }, []);
+
+  const rise = (delay: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 12 },
+          animate: { opacity: 1, y: 0 },
+          transition: {
+            duration: 0.45,
+            delay,
+            ease: [0.4, 0, 0.2, 1] as const,
+          },
+        };
 
   return (
     <>
       <a href="#main-content" className="skip-link">
         Skip to content
       </a>
-      <div className="grain-overlay" aria-hidden="true" />
       <Navbar activeSection={activeSection} />
 
       <main
         id="main-content"
-        className="max-w-5xl mx-auto px-6 md:px-12 pt-20 md:pt-24 pb-24"
+        className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 pt-14 md:pt-16"
       >
-        {/* ═══════════ HERO ═══════════ */}
         <header
-          className="pt-6 md:pt-8 pb-16 md:pb-20 border-b border-border-subtle"
           id="hero"
+          className="grid lg:grid-cols-12 gap-x-8 gap-y-10 items-end pt-12 md:pt-20 pb-16 md:pb-24"
         >
-          <div className="max-w-3xl">
-            <motion.h1
-              initial={reduce ? undefined : { opacity: 0, y: 10 }}
-              animate={reduce ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="heading-display mb-6"
-            >
-              Anton James Genabio. <br />
-              <span className="text-slate-500 light:text-zinc-500">
-                Software Engineer.
-              </span>
-            </motion.h1>
-
-            <motion.p
-              initial={reduce ? undefined : { opacity: 0, y: 10 }}
-              animate={reduce ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-body text-lg md:text-xl mb-10"
-            >
-              I build web apps and internal tools for organizations and small
-              teams, adding AI where it actually helps.
+          <div className="lg:col-span-12">
+            <motion.p {...rise(0)} className="text-meta mb-5">
+              Software Engineer, Cebu
             </motion.p>
+            <motion.h1 {...rise(0.05)} className="heading-display">
+              I build web apps end to end, from the database to the screen.
+            </motion.h1>
+          </div>
 
+          <div className="lg:col-span-5 lg:pb-16">
+            <motion.p {...rise(0.12)} className="text-body mb-8">
+              Lately that means Lessora, a lesson planner, and the system 3,000+
+              PSITS students at the University of Cebu use.
+            </motion.p>
             <motion.div
-              initial={reduce ? undefined : { opacity: 0, y: 10 }}
-              animate={reduce ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex gap-4"
+              {...rise(0.18)}
+              className="flex flex-wrap items-center gap-x-6 gap-y-4"
             >
               <a href="#projects" className="btn-primary">
-                View Projects
+                See the work
               </a>
               <a
                 href="mailto:jamesgenabio31@gmail.com"
-                className="btn-secondary"
+                className="link text-sm"
               >
-                Contact Me
+                Contact me
               </a>
             </motion.div>
           </div>
+
+          <motion.div
+            {...(reduce
+              ? {}
+              : {
+                  initial: { opacity: 0, x: 24 },
+                  animate: { opacity: 1, x: 0 },
+                  transition: {
+                    duration: 0.6,
+                    delay: 0.25,
+                    ease: [0.4, 0, 0.2, 1] as const,
+                  },
+                })}
+            className="lg:col-span-7 relative pb-10 sm:pb-16"
+            aria-hidden="true"
+          >
+            <Image
+              src="/assets/lessora.png"
+              alt=""
+              width={1000}
+              height={475}
+              priority
+              sizes="(min-width: 1024px) 50vw, 90vw"
+              className="w-[88%] h-auto rounded-[var(--radius-ui)] border border-rule shadow-[0_18px_40px_-24px_rgb(21_23_28/0.45)]"
+            />
+            <Image
+              src="/assets/psits.png"
+              alt=""
+              width={1000}
+              height={477}
+              sizes="(min-width: 1024px) 40vw, 75vw"
+              className="absolute right-0 bottom-0 w-[72%] h-auto rounded-[var(--radius-ui)] border border-rule shadow-[0_18px_40px_-20px_rgb(21_23_28/0.5)]"
+            />
+          </motion.div>
         </header>
 
-        {/* ═══════════ SKILLS ═══════════ */}
-        <SkillsSection />
-
-        {/* ═══════════ PROJECTS ═══════════ */}
         <ProjectsSection onSelect={setActiveProject} />
-
-        {/* ═══════════ AGENTS ═══════════ */}
         <AgentsSection />
-
-        {/* ═══════════ ROLES & COMMITMENT ═══════════ */}
         <RolesSection />
-
-        {/* ═══════════ ABOUT ═══════════ */}
+        <SkillsSection />
         <AboutSection />
-
-        {/* ═══════════ FEEDBACK ═══════════ */}
         <FeedbackSection />
       </main>
 
-      {/* ═══════════ FOOTER ═══════════ */}
       <Footer />
 
-      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
+      <ProjectModal
+        project={activeProject}
+        onClose={() => setActiveProject(null)}
+      />
     </>
   );
 }

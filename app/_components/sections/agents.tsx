@@ -1,89 +1,34 @@
-'use client';
-
-import { motion, useReducedMotion } from 'framer-motion';
-
-const agentGroups = [
+const principles = [
   {
-    group: 'Terminal agents',
-    items: [
-      {
-        name: 'Claude Code',
-        role: 'Multi-file features and codebase-level work in the terminal',
-      },
-      {
-        name: 'OpenCode',
-        role: 'Open-source agent that runs this portfolio\'s own workflow',
-      },
-      {
-        name: 'Gemini CLI',
-        role: 'Quick one-shot tasks and fast prototyping',
-      },
-    ],
+    title: 'Start with how people work now',
+    body: 'Before PSITS had a platform, it ran on Google Forms and spreadsheets. I learn the current process first and build around it, not the other way around.',
   },
   {
-    group: 'IDE-integrated',
-    items: [
-      {
-        name: 'Cursor',
-        role: 'Agentic editing inside the IDE',
-      },
-      {
-        name: 'Copilot',
-        role: 'Inline completions and chat-assisted edits',
-      },
-      {
-        name: 'Codex',
-        role: 'OpenAI\'s agent inside the IDE for multi-file, repo-aware work',
-      },
-    ],
+    title: 'Plan before writing code',
+    body: 'Every change gets a short written plan: what changes, how it gets tested and how to roll it back if it breaks.',
+  },
+  {
+    title: 'Own it end to end',
+    body: 'Design, frontend, backend, database and deployment. On Lessora I did all of it myself, so nothing falls between teams.',
+  },
+  {
+    title: 'Keep it running after launch',
+    body: 'Shipping is the middle, not the end. PSITS is on its third generation, and its move from React 18 to React 19 happens piece by piece while members keep using it.',
   },
 ];
 
 export function AgentsSection() {
-  const reduce = useReducedMotion();
-
   return (
-    <section className="py-24 border-b border-border-subtle" id="agents">
-      <div className="mb-16 max-w-2xl">
-        <h2 className="heading-section">Agents</h2>
-        <p className="text-body">
-          The coding agents in my day-to-day. I pick the tool per task and
-          keep human review in the loop.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
-        {agentGroups.map((agentGroup, groupIdx) => (
-          <motion.div
-            key={agentGroup.group}
-            initial={reduce ? undefined : { opacity: 0, y: 20 }}
-            whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.5, delay: groupIdx * 0.1 }}
-          >
-            <h3 className="text-xs uppercase tracking-widest text-slate-500 light:text-zinc-500 mb-6">
-              {agentGroup.group}
-            </h3>
-            <ul className="flex flex-col">
-              {agentGroup.items.map((agent, itemIdx) => (
-                <motion.li
-                  key={agent.name}
-                  initial={reduce ? undefined : { opacity: 0, y: 8 }}
-                  whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-20px' }}
-                  transition={{ duration: 0.4, delay: itemIdx * 0.06 }}
-                  className="flex flex-col gap-1 py-4 border-b border-border-subtle light:border-zinc-200 last:border-b-0"
-                >
-                  <span className="text-slate-200 light:text-zinc-800 font-medium">
-                    {agent.name}
-                  </span>
-                  <span className="text-body-sm">{agent.role}</span>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
+    <section className="py-16 md:py-24 border-t border-rule" id="agents">
+      <h2 className="heading-section mb-10 md:mb-14">How I work</h2>
+      <ul className="grid sm:grid-cols-2 gap-x-10 lg:gap-x-16 gap-y-10 md:gap-y-12">
+        {principles.map((p) => (
+          <li key={p.title} className="border-t border-rule pt-5">
+            <h3 className="heading-card text-lg md:text-xl mb-2">{p.title}</h3>
+            <p className="text-body-sm max-w-[48ch]">{p.body}</p>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

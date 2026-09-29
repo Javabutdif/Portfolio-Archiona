@@ -1,90 +1,46 @@
-import { motion, useReducedMotion } from 'framer-motion';
+const roles = [
+  {
+    years: '2024-2025',
+    title: 'Lead developer',
+    org: 'PSITS, University of Cebu',
+    note: 'Built the third generation of the PSITS site from scratch. It replaced Google Forms and spreadsheets and still runs operations and events for 3,000+ members.',
+  },
+  {
+    years: '2026',
+    title: 'Solo founder and developer',
+    org: 'Lessora AI',
+    note: 'Design, frontend, backend and deployment. It is live and in use. Better export options and scheduling tools are next.',
+  },
+  {
+    years: '2026',
+    title: 'AI engineer',
+    org: 'Noetix',
+    note: 'Designed and built the orchestration service: persona guardrails, session state and the tool-selection loop.',
+  },
+];
 
 export function RolesSection() {
-  const reduce = useReducedMotion();
-
   return (
-    <section className="py-24 border-b border-border-subtle" id="roles">
-      <div className="mb-16 max-w-2xl">
-        <h2 className="heading-section">Where I invest my time</h2>
-        <p className="text-body">
-          Roles and commitments beyond the project cards, with context on how I
-          engage with each.
-        </p>
-      </div>
-
-      <div className="flex flex-col gap-8">
-        <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 20 }}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col gap-8"
-        >
-          <div className="divide-y divide-border-subtle light:divide-zinc-200">
-            <div className="py-6 first:pt-0 last:pb-0">
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
-                <div>
-                  <h3 className="heading-card text-lg">Lead Developer</h3>
-                  <p className="text-body-sm mt-1">
-                    PSITS (Philippine Society of Information Technology Students)
-                  </p>
-                </div>
-                <span className="text-meta whitespace-nowrap">2024 - 2025</span>
+    <section className="py-16 md:py-24 border-t border-rule" id="roles">
+      <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
+        <h2 className="heading-section lg:col-span-4">Experience</h2>
+        <ol className="lg:col-span-8 flex flex-col gap-10">
+          {roles.map((role) => (
+            <li
+              key={role.org}
+              className="grid sm:grid-cols-[7rem_1fr] gap-x-6 gap-y-1"
+            >
+              <p className="text-meta sm:pt-1.5">{role.years}</p>
+              <div>
+                <h3 className="heading-card text-lg md:text-xl">
+                  {role.title}
+                  <span className="text-muted font-semibold">, {role.org}</span>
+                </h3>
+                <p className="text-body-sm mt-2 max-w-[60ch]">{role.note}</p>
               </div>
-              <p className="text-body-sm">
-                Built the PSITS website from scratch and served as Lead
-                Developer. The platform was upgraded from Google Forms and
-                manual spreadsheets to a full web system handling merchandise,
-                events, membership lifecycle, certificate generation, and
-                recruitment. This is the site&apos;s third generation. The
-                platform continues to serve over three thousand members for
-                operations and events.
-              </p>
-            </div>
-
-            <div className="py-6">
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
-                <div>
-                  <h3 className="heading-card text-lg">
-                    Solo Founder / Developer
-                  </h3>
-                  <p className="text-body-sm mt-1">Lessora AI</p>
-                </div>
-                <span className="text-meta whitespace-nowrap">2026</span>
-              </div>
-              <p className="text-body-sm">
-                A lesson planning platform I built end to end, from design
-                and frontend to backend and deployment. Transforms simple
-                inputs like topic and grade level into complete
-                curriculum-aligned plans. Deployed and in use, with ongoing
-                feature additions including refined export options and
-                expanded scheduling tools.
-              </p>
-            </div>
-
-            <div className="py-6">
-              <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
-                <div>
-                  <h3 className="heading-card text-lg">
-                    AI Engineer / Developer
-                  </h3>
-                  <p className="text-body-sm mt-1">Noetix</p>
-                </div>
-                <span className="text-meta whitespace-nowrap">2026</span>
-              </div>
-              <p className="text-body-sm">
-                A persona-aware orchestration service that transforms data
-                payloads into structured natural language responses with
-                traceable guardrail matches. Features sixteen personas with
-                inheritance chains, session state management, dynamic prompt
-                construction, and a tool-selection loop for multi-step task
-                coordination. Built on pure Node.js HTTP with no web
-                framework.
-              </p>
-            </div>
-          </div>
-        </motion.div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

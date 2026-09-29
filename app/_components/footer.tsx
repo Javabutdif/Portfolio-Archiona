@@ -2,33 +2,36 @@ import { GithubLogo, LinkedinLogo } from '@phosphor-icons/react';
 
 export function Footer() {
   return (
-    <footer className="border-t border-border-subtle light:border-zinc-200 py-8">
-      <div className="max-w-5xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-slate-300 light:text-zinc-700">
-            Anton James Genabio
-          </span>
-        </div>
-        <div className="flex items-center gap-6 text-meta">
+    <footer className="border-t border-rule">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 py-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <p className="text-sm text-muted">
+          Anton James Genabio, {new Date().getFullYear()}
+        </p>
+        <div className="flex items-center gap-2 -mx-2.5 sm:mx-0">
+          <a
+            href="mailto:jamesgenabio31@gmail.com"
+            className="link text-sm px-2.5 sm:px-0 sm:mr-3"
+          >
+            jamesgenabio31@gmail.com
+          </a>
           <a
             href="https://github.com/Javabutdif"
             target="_blank"
             rel="noreferrer"
-            className="text-slate-500 light:text-zinc-500 hover:text-white light:hover:text-zinc-900 transition-colors"
             aria-label="GitHub"
+            className="size-11 grid place-items-center text-muted hover:text-ink transition-colors"
           >
-            <GithubLogo size={18} />
+            <GithubLogo size={20} />
           </a>
           <a
             href="https://www.linkedin.com/in/jgenabs/"
             target="_blank"
             rel="noreferrer"
-            className="text-slate-500 light:text-zinc-500 hover:text-white light:hover:text-zinc-900 transition-colors"
             aria-label="LinkedIn"
+            className="size-11 grid place-items-center text-muted hover:text-ink transition-colors"
           >
-            <LinkedinLogo size={18} />
+            <LinkedinLogo size={20} />
           </a>
-          <span>{`© ${new Date().getFullYear()}`}</span>
         </div>
       </div>
     </footer>

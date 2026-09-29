@@ -1,52 +1,58 @@
-import { motion, useReducedMotion } from 'framer-motion';
-import { MapPin, EnvelopeSimple } from '@phosphor-icons/react';
+const facts = [
+  { label: 'Based in', value: 'Cebu, Philippines' },
+  { label: 'Studied', value: 'BS Information Technology, University of Cebu' },
+];
 
 export function AboutSection() {
-  const reduce = useReducedMotion();
-
   return (
-    <section className="py-24" id="about">
-      <div className="mb-16 max-w-2xl">
-        <h2 className="heading-section">About</h2>
-        <p className="text-body">
-          I care about software that actually helps people, not just
-          software that ships. That means clean code, straightforward UIs,
-          and not overcomplicating things.
-        </p>
-      </div>
+    <section className="py-16 md:py-24 border-t border-rule" id="about">
+      <div className="grid lg:grid-cols-12 gap-10 lg:gap-12">
+        <div className="lg:col-span-7">
+          <h2 className="heading-section">About</h2>
+          <p className="font-sans text-lg md:text-xl text-ink leading-relaxed max-w-[60ch] [text-wrap:pretty]">
+            I care about software that actually helps people, not just software
+            that ships. For me that means clean code, plain interfaces and not
+            overcomplicating things.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-xl">
-        <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 20 }}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
-        >
-          <span className="block text-xs uppercase tracking-widest text-slate-500 light:text-zinc-500 mb-1">
-            Location
-          </span>
-          <span className="text-slate-300 light:text-zinc-700 flex items-center gap-2">
-            <MapPin size={16} className="text-slate-500 light:text-zinc-400" />{' '}
-            Cebu, Philippines
-          </span>
-        </motion.div>
-        <motion.div
-          initial={reduce ? undefined : { opacity: 0, y: 20 }}
-          whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-        >
-          <span className="block text-xs uppercase tracking-widest text-slate-500 light:text-zinc-500 mb-1">
-            Education
-          </span>
-          <span className="text-slate-300 light:text-zinc-700 flex items-start gap-2">
-            <EnvelopeSimple
-              size={16}
-              className="text-slate-500 light:text-zinc-400 mt-1 shrink-0"
-            />
-            BS Information Technology, <br /> University of Cebu
-          </span>
-        </motion.div>
+        <dl className="lg:col-span-5 lg:pt-14 flex flex-col gap-5">
+          {facts.map((f) => (
+            <div key={f.label}>
+              <dt className="text-meta mb-1">{f.label}</dt>
+              <dd className="text-ink">{f.value}</dd>
+            </div>
+          ))}
+          <div>
+            <dt className="text-meta mb-1">Email</dt>
+            <dd>
+              <a href="mailto:jamesgenabio31@gmail.com" className="link">
+                jamesgenabio31@gmail.com
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt className="text-meta mb-1">Elsewhere</dt>
+            <dd className="flex gap-5">
+              <a
+                href="https://github.com/Javabutdif"
+                target="_blank"
+                rel="noreferrer"
+                className="link"
+              >
+                GitHub
+              </a>
+              <a
+                href="https://www.linkedin.com/in/jgenabs/"
+                target="_blank"
+                rel="noreferrer"
+                className="link"
+              >
+                LinkedIn
+              </a>
+            </dd>
+          </div>
+        </dl>
       </div>
     </section>
   );

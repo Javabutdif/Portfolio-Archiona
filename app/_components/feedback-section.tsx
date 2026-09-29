@@ -1,8 +1,6 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { ChatText, PaperPlaneTilt } from '@phosphor-icons/react';
 
 export interface FeedbackItem {
   id: number;
@@ -10,6 +8,9 @@ export interface FeedbackItem {
   body: string;
   created_at: string;
 }
+
+const inputClass =
+  'w-full min-h-11 px-3.5 py-2.5 bg-paper border border-rule rounded-[var(--radius-ui)] text-ink placeholder:text-muted focus:outline-none focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-0';
 
 export function FeedbackSection() {
   const [items, setItems] = useState<FeedbackItem[]>([]);
@@ -19,7 +20,6 @@ export function FeedbackSection() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(true);
-  const reduce = useReducedMotion();
 
   const fetchFeedback = useCallback(async () => {
     try {
@@ -28,7 +28,7 @@ export function FeedbackSection() {
       const json: { data: FeedbackItem[] } = await res.json();
       setItems(json.data);
     } catch {
-      // silent — show empty list
+      // on failure, show the form without a list
     } finally {
       setLoading(false);
     }
@@ -52,121 +52,123 @@ export function FeedbackSection() {
       const json: { data?: FeedbackItem; error?: { code: string; message: string } } =
         await res.json();
       if (!res.ok) {
-        setError(json.error?.message ?? 'Submission failed');
+        setError(json.error?.message ?? 'Your feedback was not sent. Try again.');
       } else {
         setSuccess(true);
         setName('');
         setBody('');
         fetchFeedback();
-        setTimeout(() => setSuccess(false), 4000);
+        setTimeout(() => setSuccess(false), 5000);
       }
     } catch {
-      setError('Network error — try again');
+      setError("Couldn't reach the server. Check your connection and try again.");
     } finally {
       setSubmitting(false);
     }
   }
 
-  return (
-    <section className="py-24" id="feedback">
-      <div className="mb-16 max-w-2xl">
-        <h2 className="heading-section">Client Feedback</h2>
-        <p className="text-body">What clients and collaborators have to say.</p>
-      </div>
+  const masked =
+    name.trim().length > 3 ? name.trim().slice(0, 3) + '***' : name.trim() + '***';
+  const showList = loading || items.length > 0;
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* List */}
-        <div className="flex flex-col gap-4">
-          {loading && <p className="text-body-sm text-slate-500">Loading…</p>}
-          {!loading && items.length === 0 && (
-            <p className="text-body-sm text-slate-500">
-              No feedback yet. Be the first.
-            </p>
-          )}
-          {!loading &&
-            items.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={reduce ? undefined : { opacity: 0, y: 10 }}
-                animate={reduce ? undefined : { opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: i * 0.05 }}
-                className="structured-container p-5"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <ChatText size={16} className="text-sky-400 light:text-sky-600" />
-                  <span className="text-sm font-medium text-white light:text-zinc-900">
-                    {item.display_name}
-                  </span>
-                  <span className="ml-auto text-meta text-slate-500">
-                    {new Date(item.created_at).toLocaleDateString()}
-                  </span>
-                </div>
-                <p className="text-body-sm">{item.body}</p>
-              </motion.div>
-            ))}
+  return (
+    <section className="py-16 md:py-24 border-t border-rule" id="feedback">
+      <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div className="lg:col-span-5">
+          <h2 className="heading-section">Feedback</h2>
+          <p className="text-body-sm mb-8">
+            If we&apos;ve worked together, leave a note. Only the first three
+            letters of your name are shown.
+          </p>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="feedback-name" className="text-sm font-medium text-ink">
+                Name
+              </label>
+              <input
+                id="feedback-name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                autoComplete="name"
+                className={inputClass}
+                maxLength={50}
+                required
+                aria-describedby="feedback-name-hint"
+              />
+              <p id="feedback-name-hint" className="text-meta">
+                Shown as <span className="text-ink">{masked}</span>
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="feedback-body" className="text-sm font-medium text-ink">
+                Your note
+              </label>
+              <textarea
+                id="feedback-body"
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
+                rows={4}
+                className={`${inputClass} resize-y`}
+                maxLength={2000}
+                required
+                aria-describedby="feedback-body-count"
+              />
+              <p id="feedback-body-count" className="text-meta text-right">
+                {body.length} / 2000
+              </p>
+            </div>
+
+            <div className="text-sm">
+              <p role="alert" className="text-danger">
+                {error}
+              </p>
+              <p role="status" className="text-accent">
+                {success ? 'Feedback sent. Thank you.' : ''}
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="btn-primary self-start disabled:opacity-60 disabled:cursor-wait"
+            >
+              {submitting ? 'Sending...' : 'Send feedback'}
+            </button>
+          </form>
         </div>
 
-        {/* Form */}
-        <form
-          onSubmit={handleSubmit}
-          className="structured-container p-6 flex flex-col gap-4"
-        >
-          <div>
-            <label htmlFor="feedback-name" className="text-eyebrow mb-2 block">
-              Name
-            </label>
-            <input
-              id="feedback-name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Your name (will be masked publicly)"
-              className="w-full px-4 py-2.5 bg-bg-deep light:bg-zinc-100 border border-border-subtle rounded-lg text-sm text-white light:text-zinc-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-400/50"
-              maxLength={50}
-              required
-            />
-            <p className="text-xs text-slate-500 mt-1">
-              Shown as e.g.{' '}
-              <span className="font-mono text-sky-400">
-                {name.trim().length > 3
-                  ? name.trim().slice(0, 3) + '***'
-                  : name.trim() + '***'}
-              </span>
-            </p>
+        {showList && (
+          <div className="lg:col-span-7 lg:pt-14" aria-busy={loading}>
+            {loading ? (
+              <div className="flex flex-col gap-8" aria-label="Loading feedback">
+                {[0, 1].map((i) => (
+                  <div key={i} className="animate-pulse">
+                    <div className="h-4 bg-rule rounded w-11/12 mb-2" />
+                    <div className="h-4 bg-rule rounded w-3/4 mb-4" />
+                    <div className="h-3 bg-rule rounded w-24" />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <ul className="flex flex-col gap-8">
+                {items.map((item) => (
+                  <li key={item.id}>
+                    <blockquote className="text-body text-ink whitespace-pre-line">
+                      {item.body}
+                    </blockquote>
+                    <p className="text-meta mt-2">
+                      {item.display_name},{' '}
+                      {new Date(item.created_at).toLocaleDateString()}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
-
-          <div>
-            <label htmlFor="feedback-body" className="text-eyebrow mb-2 block">
-              Feedback
-            </label>
-            <textarea
-              id="feedback-body"
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              placeholder="Share your experience…"
-              rows={4}
-              className="w-full px-4 py-2.5 bg-bg-deep light:bg-zinc-100 border border-border-subtle rounded-lg text-sm text-white light:text-zinc-900 placeholder:text-slate-500 resize-none focus:outline-none focus:ring-2 focus:ring-sky-400/50"
-              maxLength={2000}
-              required
-            />
-          </div>
-
-          {error && <p className="text-sm text-red-400">{error}</p>}
-          {success && (
-            <p className="text-sm text-sky-400">
-              Thanks — your feedback was submitted.
-            </p>
-          )}
-
-          <button
-            type="submit"
-            disabled={submitting}
-            className="btn-primary justify-center disabled:opacity-50"
-          >
-            <PaperPlaneTilt size={16} />
-            {submitting ? 'Submitting…' : 'Submit Feedback'}
-          </button>
-        </form>
+        )}
       </div>
     </section>
   );
