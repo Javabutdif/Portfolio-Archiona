@@ -38,26 +38,8 @@ export default async function OpengraphImage() {
           color: '#e6e8ec',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-          <div
-            style={{
-              width: 56,
-              height: 56,
-              borderRadius: 6,
-              background: '#8fa5ff',
-              color: '#121417',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: 34,
-              fontFamily: 'Archivo',
-            }}
-          >
-            A
-          </div>
-          <div style={{ fontSize: 30, fontFamily: 'Archivo' }}>
-            Anton James Genabio
-          </div>
+        <div style={{ display: 'flex', fontSize: 30, fontFamily: 'Archivo' }}>
+          Anton James Genabio
         </div>
 
         <div
