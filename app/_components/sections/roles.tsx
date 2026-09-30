@@ -1,21 +1,15 @@
 const roles = [
   {
+    years: '2025-2026',
+    title: 'Associate software engineer',
+    org: 'Accenture',
+    note: 'Configuring enterprise cloud applications.',
+  },
+  {
     years: '2024-2025',
-    title: 'Lead developer',
+    title: 'Co-founder and lead developer',
     org: 'PSITS, University of Cebu',
-    note: 'Built the third generation of the PSITS site from scratch. It replaced Google Forms and spreadsheets and still runs operations and events for 3,000+ members.',
-  },
-  {
-    years: '2026',
-    title: 'Solo founder and developer',
-    org: 'Lessora AI',
-    note: 'Design, frontend, backend and deployment. It is live and in use. Better export options and scheduling tools are next.',
-  },
-  {
-    years: '2026',
-    title: 'AI engineer',
-    org: 'Noetix',
-    note: 'Designed and built the orchestration service: persona guardrails, session state and the tool-selection loop.',
+    note: 'Built the first generation of the PSITS platform in 2024, replacing Google Forms and spreadsheets. It is now on its third generation, maintained by other developers, and still runs operations and events for 3,000+ members.',
   },
 ];
 
