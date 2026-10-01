@@ -15,16 +15,19 @@ block are overwritten; edits outside are preserved.
 Before writing or modifying code, follow `.archiona/workflow.md` (included
 below; it is the source of truth):
 
-1. **Read the Obsidian vault first — always, automatically, without asking.**
-   `vaultPath` and `projectSlug` are in `.archiona/workflow.config.json`.
+1. **Read the vault map first — always, automatically, without asking**:
+   `<vaultPath>/<projectSlug>/Map.md` (paths in
+   `.archiona/workflow.config.json`). Open only the notes it lists that are
+   relevant to the task, then the repo files.
 2. Create the plan (`archiona plan --slug <slug> --title "<title>"`) and fill
    Evidence, Problem, Files, Dependencies, Test plan, Rollback.
 3. Stop until the human ticks `- [x] **Approved**`.
 4. Read the matching skill under `.archiona/skills/`; change only the planned
    files. Need another file? Stop and ask.
 5. Run the Test plan and `archiona validate`; fix every FAIL line.
-6. **Update the Obsidian vault after implementing — always, automatically,
-   without asking**: `<vaultPath>/<projectSlug>/<plan-slug>.md`.
+6. **Update the vault map after implementing — always, automatically, without asking**:
+   `archiona note --slug <slug> [--commit <hash>]`, then fill in the note it
+   writes under `plans/`. Map.md updates itself.
 7. Tick `- [x] **Implemented**` (until then validate warns `plan-implemented`).
 
 If `archiona` is not found, run `npx archiona <command>` instead.
@@ -95,18 +98,21 @@ If CHANGES_REQUESTED: return to `developer` with the specific issues.
 
 ## Project workflow (`.archiona/workflow.md`)
 
-  # Archiona Workflow (v5.7.0 — lightweight)
+  # Archiona Workflow (v5.8.0 — lightweight)
   
   The rule every coding agent follows before writing code: **vault → plan →
   approve → build → verify → vault note.** Nothing else is mandatory.
   
   ## The loop
   
-  1. **Read the Obsidian vault first — always, automatically, without asking.**
-     Take `vaultPath` and `projectSlug` from `.archiona/workflow.config.json`.
-     Read every `.md` in `<vaultPath>/<projectSlug>/` and `<vaultPath>/archiona/`.
-     If the folder is empty or missing, say that you checked. Then read the repo
-     files the change will touch.
+  1. **Read the vault map first — always, automatically, without asking.**
+     Take `vaultPath` and `projectSlug` from
+     `.archiona/workflow.config.json` and read
+     `<vaultPath>/<projectSlug>/Map.md`. It lists the project's docs, its past
+     plans (date, commit, files) and its resources. Open only the notes that are
+     relevant to this change; don't read the whole folder. If Map.md is missing,
+     run `archiona map`; if the vault is off, say that you checked. Then read
+     the repo files the change will touch: they win over a note that disagrees.
   2. **Plan.** `archiona plan --slug <slug> --title "<title>" [--goal "..."]`,
      then fill `.archiona/plans/<slug>.md`:
      - **Evidence** — vault notes and repo files you read, with paths, and what
@@ -120,9 +126,12 @@ If CHANGES_REQUESTED: return to `developer` with the specific issues.
      change only the files in the plan. Need another file? Stop and ask.
   5. **Verify.** Run the Test plan and record real output. Run
      `archiona validate` and fix every FAIL line.
-  6. **Update the Obsidian vault after implementing — always, automatically,
-     without asking.** Write `<vaultPath>/<projectSlug>/<plan-slug>.md`: what
-     changed, files touched, decisions, gotchas. The next plan depends on it.
+  6. **Update the vault map after implementing — always, automatically, without asking.**
+     Run `archiona note --slug <slug> [--commit <hash>]`. It writes
+     `<vaultPath>/<projectSlug>/plans/<slug>.md` and adds the plan to Map.md.
+     Fill in what changed, decisions and gotchas. The next plan depends on it.
+     Links you add to Map.md's Resources must stay inside the project's vault
+     folder (no web URLs, no other projects).
   7. **Implemented gate.** Tick `- [x] **Implemented**`. Until then `validate`
      warns `plan-implemented` (a warning, not an error — so validate can pass
      before you tick it).
@@ -174,7 +183,9 @@ If CHANGES_REQUESTED: return to `developer` with the specific issues.
   archiona plan --slug <s> --title "<t>" [--goal "..."]   # scaffold a plan
   archiona validate [--slug <s>]                          # FAIL = blocking, WARN = advisory
   archiona persona --slug <s> --set <persona> [--add-task "<text>"]
-  archiona get-context                                    # workflow + plans + vault as JSON
+  archiona get-context                                    # workflow + plans + vault map as JSON
+  archiona map                                            # rebuild the project's vault Map.md
+  archiona note --slug <s> [--commit <hash>]              # write the plan's vault note, update Map.md
   archiona update [--dry-run]                             # resync seeded files, remove retired skills
   archiona hook                                           # regenerate agent instruction files
   ```
