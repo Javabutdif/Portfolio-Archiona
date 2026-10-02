@@ -27,7 +27,7 @@ export const projects: readonly Project[] = [
     demoLink: 'https://lessora.ajgenabio.me/',
     linkLabel: 'Open Lessora',
     thumbnail: '/assets/lessora.png',
-    thumbnailAlt: 'Lessora landing page with the headline "Lesson Plans, Made Simply"',
+    thumbnailAlt: 'Lessora landing page with the headline "A lesson plan for tomorrow\'s class"',
     year: '2026',
     role: 'Solo founder and developer',
     category: 'featured',

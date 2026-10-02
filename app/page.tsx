@@ -135,7 +135,7 @@ export default function Home() {
               src="/assets/lessora.png"
               alt=""
               width={1000}
-              height={475}
+              height={472}
               priority
               sizes="(min-width: 1024px) 50vw, 90vw"
               className="w-[88%] h-auto rounded-[var(--radius-ui)] border border-rule shadow-[0_18px_40px_-24px_rgb(21_23_28/0.45)]"
