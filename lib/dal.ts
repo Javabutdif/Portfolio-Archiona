@@ -1,11 +1,12 @@
 import { neon } from '@neondatabase/serverless';
-import { createHash } from 'node:crypto';
+import { createHash, createHmac } from 'node:crypto';
 
 const sql = neon(process.env.DATABASE_URL ?? '');
 
 export interface Feedback {
   id: number;
   name_hash: string;
+  ip_hash: string | null;
   display_name: string;
   body: string;
   created_at: string;
@@ -16,6 +17,13 @@ export interface Feedback {
 export function hashName(raw: string): string {
   return createHash('sha256')
     .update(raw.trim().toLowerCase().split(/\s+/).join(' '), 'utf8')
+    .digest('hex');
+}
+
+// Keyed so the stored value can't be reversed by hashing every IPv4 address.
+export function hashIp(ip: string): string {
+  return createHmac('sha256', process.env.SESSION_SECRET ?? '')
+    .update(ip, 'utf8')
     .digest('hex');
 }
 
@@ -45,15 +53,29 @@ export async function listPublicFeedback(
   >[];
 }
 
+export async function hasRecentFeedback(
+  ipHash: string,
+  windowSeconds: number
+): Promise<boolean> {
+  const rows = await sql`
+    SELECT 1 FROM feedback
+    WHERE ip_hash = ${ipHash}
+      AND created_at > now() - make_interval(secs => ${windowSeconds})
+    LIMIT 1
+  `;
+  return rows.length > 0;
+}
+
 export async function createFeedback(
   rawName: string,
-  body: string
+  body: string,
+  ipHash: string | null = null
 ): Promise<Feedback> {
   const displayName = maskName(rawName);
   const nameHash = hashName(rawName);
   const rows = (await sql`
-    INSERT INTO feedback (name_hash, display_name, body)
-    VALUES (${nameHash}, ${displayName}, ${body})
+    INSERT INTO feedback (name_hash, ip_hash, display_name, body)
+    VALUES (${nameHash}, ${ipHash}, ${displayName}, ${body})
     RETURNING id, display_name, body, created_at
   `) as unknown as Pick<
     Feedback,
@@ -64,6 +86,7 @@ export async function createFeedback(
   return {
     ...row,
     name_hash: nameHash,
+    ip_hash: ipHash,
     updated_at: row.created_at,
     deleted_at: null,
   };

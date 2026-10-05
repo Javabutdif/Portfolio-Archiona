@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { feedbackIn } from '@/lib/validators';
-import { createFeedback, listPublicFeedback } from '@/lib/dal';
+import { createFeedback, hasRecentFeedback, hashIp, listPublicFeedback } from '@/lib/dal';
 
-const recentSubmits = new Map<string, number>();
+const SUBMIT_WINDOW_SECONDS = 60;
 
 export async function GET() {
   const items = await listPublicFeedback(100);
@@ -34,17 +34,14 @@ export async function POST(req: Request) {
   }
 
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
-  const now = Date.now();
-  const last = recentSubmits.get(ip);
-  if (last && now - last < 60_000) {
+  const ipHash = hashIp(ip);
+  if (await hasRecentFeedback(ipHash, SUBMIT_WINDOW_SECONDS)) {
     return NextResponse.json(
       { error: { code: 'rate_limited', message: 'Please wait before submitting again' } },
       { status: 429 }
     );
   }
-  recentSubmits.set(ip, now);
-
-  const record = await createFeedback(parsed.data.name, parsed.data.body);
+  const record = await createFeedback(parsed.data.name, parsed.data.body, ipHash);
 
   const webhook = process.env.MAKE_WEBHOOK_URL;
   if (webhook) {

@@ -10,6 +10,7 @@ lerna-debug.log*
 # Next.js
 .next/
 out/
+*.tsbuildinfo
 
 # Environment
 .env.local
@@ -34,4 +35,3 @@ out/
 # Misc
 *.log
 logs/
-.archiona/

@@ -12,9 +12,6 @@
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
     "@phosphor-icons/react": "^2.1.10",
-    "@types/better-sqlite3": "^9.6.0",
-    "@vercel/postgres": "^0.10.0",
-    "better-sqlite3": "^13.0.3",
     "framer-motion": "^12.38.0",
     "iron-session": "^8.0.4",
     "next": "^15.5.26",
