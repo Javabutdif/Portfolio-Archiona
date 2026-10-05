@@ -9,11 +9,23 @@ export function AboutSection() {
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-12">
         <div className="lg:col-span-7">
           <h2 className="heading-section">About</h2>
-          <p className="font-sans text-lg md:text-xl text-ink leading-relaxed max-w-[60ch] [text-wrap:pretty]">
-            I care about software that actually helps people, not just software
-            that ships. For me that means clean code, plain interfaces and not
-            overcomplicating things.
-          </p>
+          <div className="flex flex-col gap-5 font-sans text-lg md:text-xl text-ink leading-relaxed max-w-[60ch] [text-wrap:pretty]">
+            <p>
+              My first real users were the students in our org. PSITS did
+              almost everything by hand back then. Merch orders and event
+              sign-ups went through Google Forms and spreadsheets, and someone
+              had to sort it all out after. In 2024 I decided to build the org
+              a web app that moved that work online and automated what it
+              could. Other developers run it now, and it&apos;s still what
+              3,000+ members use.
+            </p>
+            <p>
+              After that I worked at Accenture as an associate software
+              engineer, configuring enterprise cloud application systems. These
+              days I build my own things, mostly Lessora and the tools I use to
+              code faster.
+            </p>
+          </div>
         </div>
 
         <dl className="lg:col-span-5 lg:pt-14 flex flex-col gap-5">

@@ -23,14 +23,15 @@ const skills = [
     items: [
       'Node.js and Express',
       'REST APIs',
-      'MongoDB and MySQL',
+      'PostgreSQL (Neon), MongoDB and MySQL',
       'Java, C# and .NET',
     ],
   },
   {
-    group: 'Shipping',
+    group: 'Cloud and shipping',
     items: [
-      'deployment and hosting',
+      'Vercel',
+      'Cloudflare R2 object storage',
       'Git',
       'system integration',
     ],

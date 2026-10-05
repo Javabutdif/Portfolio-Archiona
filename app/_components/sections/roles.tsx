@@ -3,7 +3,7 @@ const roles = [
     years: '2025-2026',
     title: 'Associate software engineer',
     org: 'Accenture',
-    note: 'Configuring enterprise cloud applications.',
+    note: 'Focused on configuring enterprise cloud application systems.',
   },
   {
     years: '2024-2025',

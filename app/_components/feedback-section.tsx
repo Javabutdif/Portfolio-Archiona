@@ -9,6 +9,9 @@ export interface FeedbackItem {
   created_at: string;
 }
 
+// Hold the list back until there are enough notes to read as a set.
+const MIN_VISIBLE_NOTES = 3;
+
 const inputClass =
   'w-full min-h-11 px-3.5 py-2.5 bg-paper border border-rule rounded-[var(--radius-ui)] text-ink placeholder:text-muted focus:outline-none focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-0';
 
@@ -69,7 +72,7 @@ export function FeedbackSection() {
 
   const masked =
     name.trim().length > 3 ? name.trim().slice(0, 3) + '***' : name.trim() + '***';
-  const showList = loading || items.length > 0;
+  const showList = !loading && items.length >= MIN_VISIBLE_NOTES;
 
   return (
     <section className="py-16 md:py-24 border-t border-rule" id="feedback">
@@ -141,32 +144,20 @@ export function FeedbackSection() {
         </div>
 
         {showList && (
-          <div className="lg:col-span-7 lg:pt-14" aria-busy={loading}>
-            {loading ? (
-              <div className="flex flex-col gap-8" aria-label="Loading feedback">
-                {[0, 1].map((i) => (
-                  <div key={i} className="animate-pulse">
-                    <div className="h-4 bg-rule rounded w-11/12 mb-2" />
-                    <div className="h-4 bg-rule rounded w-3/4 mb-4" />
-                    <div className="h-3 bg-rule rounded w-24" />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <ul className="flex flex-col gap-8">
-                {items.map((item) => (
-                  <li key={item.id}>
-                    <blockquote className="text-body text-ink whitespace-pre-line">
-                      {item.body}
-                    </blockquote>
-                    <p className="text-meta mt-2">
-                      {item.display_name},{' '}
-                      {new Date(item.created_at).toLocaleDateString()}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            )}
+          <div className="lg:col-span-7 lg:pt-14">
+            <ul className="flex flex-col gap-8">
+              {items.map((item) => (
+                <li key={item.id}>
+                  <blockquote className="text-body text-ink whitespace-pre-line">
+                    {item.body}
+                  </blockquote>
+                  <p className="text-meta mt-2">
+                    {item.display_name},{' '}
+                    {new Date(item.created_at).toLocaleDateString()}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>

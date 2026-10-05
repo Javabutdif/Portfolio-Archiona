@@ -76,7 +76,7 @@ export function ProjectsSection({ onSelect }: Props) {
       <div className="mt-20 md:mt-28">
         <h3 className="heading-card mb-2">Smaller things</h3>
         <p className="text-body-sm mb-6">
-          Tools I built for myself, and my capstone.
+          Tools I built for myself, this site and my capstone.
         </p>
         <ul className="border-t border-rule">
           {rest.map((project) => (
