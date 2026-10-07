@@ -24,7 +24,7 @@ export const projects: readonly Project[] = [
     description:
       'Teachers type a topic, grade level and lesson length, and Lessora drafts a curriculum-aligned lesson plan they can refine, preview and export to DOC or PDF. I built all of it alone: a Next.js 15 app with a TypeScript service layer over MongoDB, GPT-4o-mini for generation, Resend for email and PayMongo for donations. Nobody has to sign up to try it. Anonymous users get a daily credit quota that resets on a schedule, and an admin dashboard handles user management.',
     tech: ['Next.js 15', 'TypeScript', 'MongoDB', 'OpenAI API', 'Resend', 'PayMongo'] as const,
-    demoLink: 'https://lessora.ajgenabio.me/',
+    demoLink: 'https://lessora.ajgenabio.me/home',
     linkLabel: 'Open Lessora',
     thumbnail: '/assets/lessora.png',
     thumbnailAlt: 'Lessora landing page with the headline "A lesson plan for tomorrow\'s class"',
