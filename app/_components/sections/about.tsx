@@ -1,6 +1,7 @@
 const facts = [
   { label: 'Based in', value: 'Cebu, Philippines' },
   { label: 'Studied', value: 'BS Information Technology, University of Cebu' },
+  { label: 'Achievement', value: 'TOPCIT Level 2 (2025)' },
 ];
 
 export function AboutSection() {
