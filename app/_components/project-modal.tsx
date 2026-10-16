@@ -59,6 +59,7 @@ export function ProjectModal({ project, onClose }: Props) {
 
   const status = projectStatus(project);
   const hasLiveLink = project.demoLink && project.demoLink !== '#';
+  const study = project.caseStudy;
 
   return (
     <AnimatePresence>
@@ -104,7 +105,33 @@ export function ProjectModal({ project, onClose }: Props) {
           </div>
 
           <div className="flex-1 overflow-y-auto px-5 sm:px-8 pt-5 pb-6 sm:pb-8">
-            <p className="text-body">{project.description}</p>
+            {study ? (
+              <>
+                <h4 className="text-eyebrow">The problem</h4>
+                <p className="text-body">{study.problem}</p>
+
+                <h4 className="text-eyebrow mt-6">What I built</h4>
+                <ul className="text-body list-disc pl-5 space-y-2 marker:text-muted">
+                  {study.built.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+
+                <h4 className="text-eyebrow mt-6">Results</h4>
+                <p className="text-body">{study.results}</p>
+
+                {study.differently && (
+                  <>
+                    <h4 className="text-eyebrow mt-6">
+                      What I&apos;d do differently
+                    </h4>
+                    <p className="text-body">{study.differently}</p>
+                  </>
+                )}
+              </>
+            ) : (
+              <p className="text-body">{project.description}</p>
+            )}
 
             <p className="text-eyebrow mt-6">Stack</p>
             <p className="text-sm text-ink">{project.tech.join(', ')}</p>

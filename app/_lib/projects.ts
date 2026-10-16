@@ -1,9 +1,17 @@
+export interface CaseStudy {
+  problem: string;
+  built: readonly string[];
+  results: string;
+  differently?: string;
+}
+
 export interface Project {
   id: number;
   title: string;
   subtitle: string;
   summary: string;
-  description: string;
+  description?: string;
+  caseStudy?: CaseStudy;
   tech: readonly string[];
   demoLink: string;
   linkLabel?: string;
@@ -21,8 +29,21 @@ export const projects: readonly Project[] = [
     subtitle: 'Lesson planner for teachers',
     summary:
       'Teachers enter a topic, grade level and lesson length. Lessora drafts a curriculum-aligned plan they can edit and export.',
-    description:
-      'Teachers type a topic, grade level and lesson length, and Lessora drafts a curriculum-aligned lesson plan they can refine, preview and export to DOC or PDF. I built all of it alone: a Next.js 15 app with a TypeScript service layer over MongoDB, GPT-4o-mini for generation, Resend for email and PayMongo for donations. Nobody has to sign up to try it. Anonymous users get a daily credit quota that resets on a schedule, and an admin dashboard handles user management.',
+    caseStudy: {
+      problem:
+        "Teachers in the Philippines write their lesson plans in DepEd's formats, and it takes hours. General AI chat tools don't know those formats, so teachers still end up reformatting whatever they get back.",
+      built: [
+        'I turned a real DepEd lesson plan into a JSON schema, so the output matches the format teachers actually submit. There are five formats now: Lessora standard, DepEd semi-detailed, detailed lesson plan, daily lesson log and MATATAG.',
+        'DepEd plans keep their official English headings even when the lesson is in another language. When I had the model translate the headings too, GPT-4o-mini started dropping sections, down to 6 of 10.',
+        'Lessora is free, so it runs on GPT-4o-mini to keep the cost per plan low.',
+        "There's no sign-up. Each anonymous session gets 3 plans a day. The limits started out in memory, with a cron job for the daily reset, and neither works on Vercel's serverless functions. So I moved the counters into MongoDB and made credits refill on the first plan after midnight, Manila time.",
+        'The prompts are editable from an admin-only page, so I can tune the output without redeploying.',
+      ],
+      results:
+        'Lessora has generated 10 lesson plans so far, and teacher feedback has averaged about 4.5 out of 5.',
+      differently:
+        "The activity suggestions came out too generic. Next I'd test the prompts against a set of sample lessons and measure how much the variety improves.",
+    },
     tech: ['Next.js 15', 'TypeScript', 'MongoDB', 'OpenAI API', 'Resend', 'PayMongo'] as const,
     demoLink: 'https://lessora.ajgenabio.me/home',
     linkLabel: 'Open Lessora',
@@ -38,8 +59,20 @@ export const projects: readonly Project[] = [
     subtitle: 'Platform for a 3,000-member student org',
     summary:
       'Merch orders, events, attendance, memberships and certificates for the IT student society at the University of Cebu.',
-    description:
-      "PSITS is the IT student society at the University of Cebu, with over 3,000 members. Merch orders, events and memberships used to run on Google Forms and spreadsheets. The platform now handles merch ordering, event attendance, the membership lifecycle, certificates, recruitment, raffles and discount codes, with Make.com connecting it to the org's other tools. The backend is Express and TypeScript on MongoDB, with JWT token rotation, Cloudflare R2 storage and Puppeteer for PDF certificates. The frontend is React 19 and TypeScript. An older React 18 JavaScript frontend is still being moved over.",
+    caseStudy: {
+      problem:
+        'PSITS ran on paper, Google Forms and spreadsheets, and officers processed orders, memberships and event sign-ups by hand. The bigger problem was transparency. Nobody could tell who had approved a payment, so officers and professors had a hard time auditing the finances.',
+      built: [
+        "Titles and permissions are separate. An officer's position is just a label. What they can actually do comes from their access level: admin, executive, developer, finance or standard, and standard can't approve anything.",
+        'Only finance can approve money transactions. Admin and developer can approve them too, as a fallback.',
+        "Every approval is logged, so it's always clear who approved what and when.",
+        'Payment stays in person. Once finance approves an order, the system emails the receipt. If the daily email quota runs out, a cron job sends the rest the next day.',
+      ],
+      results:
+        "I built the first generation in 2024, and it has run for more than two years. It's on its third generation now, run by other developers, and 3,000+ members use it.",
+      differently:
+        "I'd set up automated database backups from day one. The free MongoDB tier doesn't make any.",
+    },
     tech: ['React 19', 'TypeScript', 'Express', 'MongoDB', 'Cloudflare R2', 'Make.com'] as const,
     demoLink: 'https://psits.org/',
     linkLabel: 'Open psits.org',
