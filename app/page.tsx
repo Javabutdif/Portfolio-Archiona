@@ -84,7 +84,7 @@ export default function Home() {
       >
         <header
           id="hero"
-          className="grid lg:grid-cols-12 gap-x-8 gap-y-10 items-end pt-12 md:pt-20 pb-16 md:pb-24"
+          className="grid lg:grid-cols-12 gap-x-8 gap-y-10 items-end pt-12 md:pt-20 pb-16 md:pb-24 max-sm:overflow-x-clip"
         >
           <div className="lg:col-span-12">
             <motion.p {...rise(0)} className="text-meta mb-5">
