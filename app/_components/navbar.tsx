@@ -5,6 +5,7 @@ import { GithubLogo, LinkedinLogo, List, X } from '@phosphor-icons/react';
 
 const navLinks = [
   { label: 'Work', href: '#projects' },
+  { label: 'Commissions', href: '#commissions' },
   { label: 'How I work', href: '#agents' },
   { label: 'Experience', href: '#roles' },
   { label: 'Skills', href: '#skills' },

@@ -6,6 +6,12 @@ const roles = [
     note: 'Focused on configuring enterprise cloud application systems.',
   },
   {
+    years: '2024-2025, 2026-present',
+    title: 'Freelance developer',
+    org: 'Project-based',
+    note: 'Builds custom systems for clients, one project at a time.',
+  },
+  {
     years: '2024-2025',
     title: 'Co-founder and lead developer',
     org: 'PSITS, University of Cebu',

@@ -7,6 +7,7 @@ import { Navbar } from "@/app/_components/navbar";
 import { Footer } from "@/app/_components/footer";
 import { SkillsSection } from "@/app/_components/sections/skills";
 import { ProjectsSection } from "@/app/_components/sections/projects";
+import { CommissionsSection } from "@/app/_components/sections/commissions";
 import { FeedbackSection } from "@/app/_components/feedback-section";
 import { AgentsSection } from "@/app/_components/sections/agents";
 import { RolesSection } from "@/app/_components/sections/roles";
@@ -14,7 +15,7 @@ import { AboutSection } from "@/app/_components/sections/about";
 import { ProjectModal } from "@/app/_components/project-modal";
 import type { Project } from "@/app/_lib/projects";
 
-const SECTION_IDS = ["hero", "projects", "agents", "roles", "skills", "about"];
+const SECTION_IDS = ["hero", "projects", "commissions", "agents", "roles", "skills", "about"];
 
 export default function Home() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
@@ -152,6 +153,7 @@ export default function Home() {
         </header>
 
         <ProjectsSection onSelect={setActiveProject} />
+        <CommissionsSection />
         <AgentsSection />
         <RolesSection />
         <SkillsSection />
