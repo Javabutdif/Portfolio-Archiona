@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { X, ArrowUpRight } from '@phosphor-icons/react';
 import { projectStatus } from '@/app/_lib/projects';
@@ -60,6 +61,7 @@ export function ProjectModal({ project, onClose }: Props) {
   const status = projectStatus(project);
   const hasLiveLink = project.demoLink && project.demoLink !== '#';
   const study = project.caseStudy;
+  const [lead, ...more] = project.screenshots ?? [];
 
   return (
     <AnimatePresence>
@@ -105,6 +107,42 @@ export function ProjectModal({ project, onClose }: Props) {
           </div>
 
           <div className="flex-1 overflow-y-auto px-5 sm:px-8 pt-5 pb-6 sm:pb-8">
+            {lead && (
+              <div className="mb-7">
+                <a href={lead.src} target="_blank" rel="noreferrer" className="block">
+                  <Image
+                    src={lead.src}
+                    alt={lead.alt}
+                    width={1440}
+                    height={900}
+                    sizes="(min-width: 640px) 608px, 100vw"
+                    className="w-full h-auto rounded-[var(--radius-ui)] border border-rule"
+                  />
+                </a>
+                {more.length > 0 && (
+                  <ul className="grid grid-cols-3 gap-2 mt-2">
+                    {more.map((shot) => (
+                      <li key={shot.src}>
+                        <a href={shot.src} target="_blank" rel="noreferrer" className="block">
+                          <Image
+                            src={shot.src}
+                            alt={shot.alt}
+                            width={1440}
+                            height={900}
+                            sizes="(min-width: 640px) 200px, 33vw"
+                            className="w-full h-auto rounded-[var(--radius-ui)] border border-rule hover:border-ink transition-colors"
+                          />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {project.screenshotsCredit && (
+                  <p className="text-meta mt-2">{project.screenshotsCredit}</p>
+                )}
+              </div>
+            )}
+
             {study ? (
               <>
                 <h4 className="text-eyebrow">The problem</h4>

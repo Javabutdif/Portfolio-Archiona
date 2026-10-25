@@ -5,6 +5,11 @@ export interface CaseStudy {
   differently?: string;
 }
 
+export interface Screenshot {
+  src: string;
+  alt: string;
+}
+
 export interface Project {
   id: number;
   title: string;
@@ -17,6 +22,8 @@ export interface Project {
   linkLabel?: string;
   thumbnail?: string;
   thumbnailAlt?: string;
+  screenshots?: readonly Screenshot[];
+  screenshotsCredit?: string;
   year?: string;
   role?: string;
   category: 'featured' | 'school' | 'other';
@@ -81,6 +88,54 @@ export const projects: readonly Project[] = [
     year: '2024',
     role: 'Lead developer',
     category: 'featured',
+  },
+  {
+    id: 10,
+    title: 'Genshin Companion',
+    subtitle: 'Automatic wish tracker and daily tools for Genshin Impact',
+    summary:
+      'A Windows app that tracks my Genshin Impact wishes and pity on its own, with daily tools for domains, banners and builds.',
+    caseStudy: {
+      problem:
+        "Genshin Impact doesn't show your pity, and wish trackers make you import your history by hand: open Wish History in the game, run a script, paste a link. Skip it for a while and older wishes are gone, because the game only keeps recent history. I wanted it to happen without me.",
+      built: [
+        'It watches the files the game writes. When I open Wish History, the game caches a link with a temporary key. The app reads a copy of that cache, finds the newest link, syncs only the new wishes and sends a Windows notification with the result.',
+        "It stays passive so it doesn't behave like a bot. It never touches the game process, its memory or its traffic. Requests go out one at a time, at least a second apart, and stop as soon as HoYoverse asks it to slow down. The key stays in memory and is never written to disk or to the logs.",
+        'The dashboard only answers on 127.0.0.1. Every API call needs a token that changes on each launch, requests with another Host or Origin are refused, and every outbound request goes through one helper that only allows HTTPS to a fixed list of hosts.',
+        "The pity rings use real game art, cached on my PC so the page works offline and never loads anything from another site. When the game's history doesn't reach my first pulls, the first 5★ shows as \"≥ N\" instead of a number the app can't know.",
+        'Around the tracker: a luck report, an exact pull-probability planner, the domains open today with reset timers, current banners and events, alerts for new redeem codes, build checks from my in-game showcase, a material planner and daily backups.',
+        'I built it with Claude Code as a pair programmer. I set the requirements and the safety rules, and approved each plan before any code was written.',
+      ],
+      results:
+        'On its first run it synced 239 of my wishes in 16 requests, with nothing to set up. It starts hidden when I sign in to Windows, and it has 83 automated tests.',
+      differently:
+        'I assumed the game keeps 6 months of wish history and built around that. It keeps more, so next time I would check assumptions like that against my own data first.',
+    },
+    tech: ['TypeScript', 'Node.js', 'Express', 'SQLite', 'React', 'Vite'] as const,
+    demoLink: '',
+    linkLabel: 'Private project',
+    screenshots: [
+      {
+        src: '/assets/genshin-companion/wishes.png',
+        alt: 'Wish tracker with a pity ring at 10 of 90 over Escoffier art, plus weapon and standard banner rings',
+      },
+      {
+        src: '/assets/genshin-companion/today.png',
+        alt: 'Today page showing Sunday on the Asia server, reset countdowns and the talent book domains open today',
+      },
+      {
+        src: '/assets/genshin-companion/banners.png',
+        alt: 'Banners page with the current Skirk, Escoffier and weapon wish banners and their end times',
+      },
+      {
+        src: '/assets/genshin-companion/materials.png',
+        alt: 'Material planner listing what Furina needs to reach level 90, including 3,277,500 Mora',
+      },
+    ],
+    screenshotsCredit: 'Unofficial fan project. Game art belongs to HoYoverse.',
+    year: '2026',
+    role: 'Creator',
+    category: 'other',
   },
   {
     id: 9,
