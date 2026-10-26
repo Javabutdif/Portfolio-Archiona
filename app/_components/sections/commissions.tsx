@@ -20,7 +20,7 @@ export function CommissionsSection() {
   return (
     <section className="py-16 md:py-24 border-t border-rule" id="commissions">
       <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
-        <h2 className="heading-section lg:col-span-4">Commissions</h2>
+        <h2 className="heading-section lg:col-span-4">Client work</h2>
         <ol className="lg:col-span-8 flex flex-col gap-10">
           {commissions.map((commission) => (
             <li

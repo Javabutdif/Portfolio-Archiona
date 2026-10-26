@@ -54,6 +54,9 @@ export async function POST(req: Request) {
     );
   }
 
-  const record = await createFeedback(parsed.data.name, parsed.data.body);
+  const record = await createFeedback(parsed.data.name, parsed.data.body, {
+    relationship: parsed.data.relationship,
+    approved: true,
+  });
   return NextResponse.json({ data: record }, { status: 201 });
 }

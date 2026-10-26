@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { feedbackUpdate } from '@/lib/validators';
-import { updateFeedback, deleteFeedback } from '@/lib/dal';
+import { updateFeedback, deleteFeedback, setFeedbackApproved } from '@/lib/dal';
 import { isAdmin } from '@/lib/auth';
 
 type Params = { params: Promise<{ id: string }> };
@@ -52,7 +52,17 @@ export async function PUT(req: Request, { params }: Params) {
     );
   }
 
-  const updated = await updateFeedback(idNum, parsed.data);
+  const { approved, ...fields } = parsed.data;
+  if (approved !== undefined) {
+    const result = await setFeedbackApproved(idNum, approved);
+    if (!result) {
+      return NextResponse.json(
+        { error: { code: 'not_found', message: 'Feedback not found' } },
+        { status: 404 }
+      );
+    }
+  }
+  const updated = await updateFeedback(idNum, fields);
   if (!updated) {
     return NextResponse.json(
       { error: { code: 'not_found', message: 'Feedback not found' } },

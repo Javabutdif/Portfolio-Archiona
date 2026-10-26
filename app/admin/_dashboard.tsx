@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Plus, Trash, Pencil, SignOut } from '@phosphor-icons/react';
+import { Plus, Trash, Pencil, SignOut, Check, EyeSlash } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
 
 interface FeedbackRow {
@@ -10,8 +10,10 @@ interface FeedbackRow {
   name_hash: string;
   display_name: string;
   body: string;
+  relationship: string | null;
   created_at: string;
   updated_at: string;
+  approved_at: string | null;
   deleted_at: string | null;
 }
 
@@ -70,6 +72,21 @@ export function AdminDashboard() {
     fetchFeedback();
   }
 
+  async function handleApprove(id: number, approved: boolean) {
+    setError('');
+    const res = await fetch(`/api/admin/feedback/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ approved }),
+    });
+    if (!res.ok) {
+      const json = await res.json();
+      setError(json.error?.message ?? 'Update failed');
+      return;
+    }
+    fetchFeedback();
+  }
+
   async function handleDelete(id: number) {
     setError('');
     const res = await fetch(`/api/admin/feedback/${id}`, { method: 'DELETE' });
@@ -112,7 +129,9 @@ export function AdminDashboard() {
       <div className="flex items-center justify-between mb-10">
         <div>
           <h1 className="heading-section !mb-0">Feedback Admin</h1>
-          <p className="text-body-sm mt-1">{items.length} entries</p>
+          <p className="text-body-sm mt-1">
+            {items.length} entries, {items.filter((i) => !i.approved_at).length} pending
+          </p>
         </div>
         <button onClick={handleLogout} className="btn-secondary text-sm">
           <SignOut size={16} />
@@ -217,12 +236,27 @@ export function AdminDashboard() {
                     <span className="text-sm font-medium text-white light:text-zinc-900">
                       {item.display_name}
                     </span>
+                    {item.relationship && (
+                      <span className="text-meta text-slate-500">{item.relationship}</span>
+                    )}
+                    <span
+                      className={`text-meta ${item.approved_at ? 'text-emerald-400' : 'text-amber-400'}`}
+                    >
+                      {item.approved_at ? 'Approved' : 'Pending'}
+                    </span>
                     <span className="ml-auto text-meta text-slate-500">
                       {new Date(item.created_at).toLocaleString()}
                     </span>
                   </div>
                   <p className="text-body-sm mb-3">{item.body}</p>
                   <div className="flex gap-2">
+                    <button
+                      onClick={() => handleApprove(item.id, !item.approved_at)}
+                      className="btn-secondary text-xs px-3 py-1.5"
+                    >
+                      {item.approved_at ? <EyeSlash size={14} /> : <Check size={14} />}
+                      {item.approved_at ? 'Unpublish' : 'Approve'}
+                    </button>
                     <button
                       onClick={() => {
                         setEditingId(item.id);

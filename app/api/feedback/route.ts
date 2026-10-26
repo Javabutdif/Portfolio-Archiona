@@ -41,7 +41,10 @@ export async function POST(req: Request) {
       { status: 429 }
     );
   }
-  const record = await createFeedback(parsed.data.name, parsed.data.body, ipHash);
+  const record = await createFeedback(parsed.data.name, parsed.data.body, {
+    ipHash,
+    relationship: parsed.data.relationship,
+  });
 
   const webhook = process.env.MAKE_WEBHOOK_URL;
   if (webhook) {
@@ -53,11 +56,16 @@ export async function POST(req: Request) {
         display_name: record.display_name,
         name_hash: record.name_hash,
         body: parsed.data.body,
+        relationship: record.relationship,
         created_at: record.created_at,
         source: 'portfolio-form',
       }),
     }).catch(() => {});
   }
 
-  return NextResponse.json({ data: record }, { status: 201 });
+  const { id, display_name, body, relationship, created_at } = record;
+  return NextResponse.json(
+    { data: { id, display_name, body, relationship, created_at } },
+    { status: 201 }
+  );
 }

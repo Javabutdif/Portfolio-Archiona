@@ -9,10 +9,17 @@ export interface Feedback {
   ip_hash: string | null;
   display_name: string;
   body: string;
+  relationship: string | null;
   created_at: string;
   updated_at: string;
+  approved_at: string | null;
   deleted_at: string | null;
 }
+
+type PublicFeedback = Pick<
+  Feedback,
+  'id' | 'display_name' | 'body' | 'relationship' | 'created_at'
+>;
 
 export function hashName(raw: string): string {
   return createHash('sha256')
@@ -40,17 +47,14 @@ export function maskName(raw: string): string {
 
 export async function listPublicFeedback(
   limit = 100
-): Promise<Pick<Feedback, 'id' | 'display_name' | 'body' | 'created_at'>[]> {
+): Promise<PublicFeedback[]> {
   return (await sql`
-    SELECT id, display_name, body, created_at
+    SELECT id, display_name, body, relationship, created_at
     FROM feedback
-    WHERE deleted_at IS NULL
-    ORDER BY created_at DESC
+    WHERE deleted_at IS NULL AND approved_at IS NOT NULL
+    ORDER BY approved_at DESC
     LIMIT ${limit}
-  `) as unknown as Pick<
-    Feedback,
-    'id' | 'display_name' | 'body' | 'created_at'
-  >[];
+  `) as unknown as PublicFeedback[];
 }
 
 export async function hasRecentFeedback(
@@ -69,27 +73,25 @@ export async function hasRecentFeedback(
 export async function createFeedback(
   rawName: string,
   body: string,
-  ipHash: string | null = null
+  {
+    ipHash = null,
+    relationship = null,
+    approved = false,
+  }: { ipHash?: string | null; relationship?: string | null; approved?: boolean } = {}
 ): Promise<Feedback> {
   const displayName = maskName(rawName);
   const nameHash = hashName(rawName);
   const rows = (await sql`
-    INSERT INTO feedback (name_hash, ip_hash, display_name, body)
-    VALUES (${nameHash}, ${ipHash}, ${displayName}, ${body})
-    RETURNING id, display_name, body, created_at
-  `) as unknown as Pick<
-    Feedback,
-    'id' | 'display_name' | 'body' | 'created_at'
-  >[];
+    INSERT INTO feedback (name_hash, ip_hash, display_name, body, relationship, approved_at)
+    VALUES (
+      ${nameHash}, ${ipHash}, ${displayName}, ${body}, ${relationship},
+      CASE WHEN ${approved} THEN now() END
+    )
+    RETURNING *
+  `) as unknown as Feedback[];
   const row = rows[0];
   if (!row) throw new Error('Failed to create feedback');
-  return {
-    ...row,
-    name_hash: nameHash,
-    ip_hash: ipHash,
-    updated_at: row.created_at,
-    deleted_at: null,
-  };
+  return row;
 }
 
 export async function listAdminFeedback(
@@ -142,6 +144,20 @@ export async function updateFeedback(
   }
   const existing = await listAdminFeedback(true);
   return existing.find((f) => f.id === id) ?? null;
+}
+
+export async function setFeedbackApproved(
+  id: number,
+  approved: boolean
+): Promise<Feedback | null> {
+  const rows = (await sql`
+    UPDATE feedback
+    SET approved_at = CASE WHEN ${approved} THEN now() END,
+        updated_at = now()
+    WHERE id = ${id}
+    RETURNING *
+  `) as unknown as Feedback[];
+  return rows[0] ?? null;
 }
 
 export async function deleteFeedback(
