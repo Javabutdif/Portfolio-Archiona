@@ -2,7 +2,7 @@ const commissions = [
   {
     year: '2026',
     title: 'Construction management system',
-    note: "A project monitoring system for an engineering office. Staff track each infrastructure project's status, contract details and planned versus actual progress, with a full history of every change. Access follows each person's role and position, reports export to Excel, and a public site shows project progress and site photos.",
+    note: "An internal system for an office that runs a portfolio of construction projects. Engineers and staff take each project from bidding to completion, with contract details, planned versus actual accomplishment, slippage and site photos, and reports flag at-risk projects and export to Excel. It also runs the office itself: an org chart with positions and job descriptions, task assignment for staff, and workload limits that flag overloaded people and duplicated tasks. Access follows each person's role, and a public site publishes project progress.",
   },
   {
     year: '2025',
